@@ -10,12 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Venue.belongsTo(models.Group, {
+        foreignKey: 'groupId'
+      })
+
+      Venue.belongsToMany(models.Group, {
+        through: models.Event,
+        foreignKey: 'venueId',
+        otherKey: 'groupId'
+      })
     }
   }
   Venue.init({
     groupId: {
       type: DataTypes.INTEGER,
+      references: {model: 'Groups'}
     },
     address: {type: DataTypes.STRING},
     city: {type: DataTypes.STRING},

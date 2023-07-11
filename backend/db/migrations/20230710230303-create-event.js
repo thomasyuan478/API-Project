@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       type: {
-        type: Sequelize.ENUM,
+        type: Sequelize.ENUM('upcoming','canceled','completed'),
         allowNull:false
       },
       capacity: {

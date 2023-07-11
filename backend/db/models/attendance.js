@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     status: {
       type: DataTypes.ENUM,
+      values: ['attending', 'not attending'],
       allowNull: false
     }
   }, {

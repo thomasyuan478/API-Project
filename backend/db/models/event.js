@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     type: {
       type: DataTypes.ENUM,
+      values: ['upcoming','canceled','completed'],
       allowNull: false
     },
     capacity: DataTypes.INTEGER,

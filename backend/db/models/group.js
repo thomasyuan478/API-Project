@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.ENUM,
-      allowNull: false
+      allowNull: false,
+      values: ['active','inactive']
     },
     private: {
       type: DataTypes.BOOLEAN,

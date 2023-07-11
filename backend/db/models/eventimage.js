@@ -10,11 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      EventImage.belongsTo(models.Event, {
+        foreignKey: 'eventId'
+      })
     }
   }
   EventImage.init({
-    eventId: DataTypes.INTEGER,
+    eventId: {
+      type: DataTypes.INTEGER,
+    references: {
+      model: 'Events'
+    }
+    },
     url: DataTypes.STRING,
     preview: {
       type: DataTypes.BOOLEAN,

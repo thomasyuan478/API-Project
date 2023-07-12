@@ -14,11 +14,23 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Attendance.init({
-    eventId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+      },
+    eventId: {
+      type: DataTypes.INTEGER,
+      references: {model: 'Events'}
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {model: 'Users'}
+    },
     status: {
-      type: DataTypes.ENUM,
-      values: ['attending', 'not attending'],
+      type: DataTypes.ENUM('attending', 'not attending'),
+
       allowNull: false
     }
   }, {

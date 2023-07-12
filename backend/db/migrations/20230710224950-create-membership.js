@@ -18,7 +18,7 @@ module.exports = {
         references: {model: 'Groups'}
       },
       status: {
-        type: Sequelize.ENUM('active', 'inactive'),
+        type: Sequelize.ENUM('pending', 'co-host','member','organizer'),
         allowNull: false
       },
       createdAt: {

@@ -13,19 +13,40 @@ module.exports = (sequelize, DataTypes) => {
       Event.hasMany(models.EventImage, {
         foreignKey: 'eventId'
       })
+
+      Event.belongsToMany(models.User, {
+        through: models.Attendance,
+        foreignKey: 'eventId',
+        otherKey: 'userId'
+      }
+        )
     }
   }
   Event.init({
-    venueId: DataTypes.INTEGER,
-    groupId: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+      },
+    venueId: {
+      type: DataTypes.INTEGER,
+      references: {model: 'Venues'}
+    },
+    groupId: {
+      type: DataTypes.INTEGER,
+      references: {model: 'Groups'}
+    },
+
     name: {
       type: DataTypes.STRING,
       allowNull: false
     },
     description: DataTypes.TEXT,
     type: {
-      type: DataTypes.ENUM,
-      values: ['upcoming','canceled','completed'],
+
+      type: DataTypes.ENUM('upcoming','canceled','completed'),
+
       allowNull: false
     },
     capacity: DataTypes.INTEGER,

@@ -14,11 +14,25 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         otherKey: 'groupId'
       })
+
+
+      User.belongsToMany(models.Event, {
+        through: models.Attendance,
+        foreignKey: 'userId',
+        otherKey: 'eventId'
+      })
+
     }
   };
 
   User.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+        },
       firstName: {
         type: DataTypes.STRING,
         validate: {

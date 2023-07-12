@@ -14,15 +14,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Membership.init({
+
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+      },
     userId: {
       type: DataTypes.INTEGER,
+      references: {model: 'Users'}
     },
     groupId: {
       type: DataTypes.INTEGER,
+      references: {model: 'Groups'}
     },
     status: {
-      type: DataTypes.ENUM,
-      values: ['inactive', 'active'],
+      type: DataTypes.ENUM('co-host','pending','member','organizer'),
+      defaultValue: 'pending',
+
       allowNull: false
     }
   }, {

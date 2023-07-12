@@ -12,23 +12,32 @@ module.exports = {
   async up (queryInterface, Sequelize) {
 
     await GroupImage.bulkCreate([{
-      groupId:
-      url:
-      preview:
+      groupId: 1,
+      url:"https://cdn2.thecatapi.com/images/chi.jpg",
+      preview: true
     },{
-      groupId:
-      url:
-      preview:
-    }]);
+      groupId: 2,
+      url:"https://cdn2.thecatapi.com/images/MTYwNzk5MA.jpg",
+      preview: false
+    },{
+      groupId: 3,
+      url:"https://cdn2.thecatapi.com/images/MjAzODI4OQ.jpg",
+      preview: false
+    },]);
 
     await EventImage.bulkCreate([{
-      groupId:
-      url:
-      preview:
+      groupId:1,
+      url:"https://cdn2.thecatapi.com/images/3ih.jpg",
+      preview: true
     },{
-      groupId:
-      url:
-      preview:
+      groupId:2,
+      url: "https://cdn2.thecatapi.com/images/199.gif",
+      preview: false
+    },
+    {
+      groupId:3,
+      url:"https://cdn2.thecatapi.com/images/MTgzMjc5Mw.jpg",
+      preview: true
     }]);
   },
 
@@ -38,12 +47,12 @@ module.exports = {
 
     options.tableName = 'GroupImages';
     await queryInterface.bulkDelete(options, {
-      preview: { [Op.in]: ['', ''] }
+      preview: { [Op.in]: ['true', 'false'] }
     }, {});
 
     options.tableName = 'EventImages';
     await queryInterface.bulkDelete(options, {
-      id: { [Op.in]: ['', ''] }
+      preview: { [Op.in]: ['true', 'false'] }
     }, {});
 
     return

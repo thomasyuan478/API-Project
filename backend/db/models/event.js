@@ -23,6 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Event.init({
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+      },
     venueId: {
       type: DataTypes.INTEGER,
       references: {model: 'Venues'}
@@ -37,8 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: DataTypes.TEXT,
     type: {
-      type: DataTypes.ENUM,
-      values: ['upcoming','canceled','completed'],
+      type: DataTypes.ENUM('upcoming','canceled','completed'),
       allowNull: false
     },
     capacity: DataTypes.INTEGER,

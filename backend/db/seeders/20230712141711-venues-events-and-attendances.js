@@ -42,8 +42,8 @@ module.exports = {
       type: 'upcoming',
       capacity: 2300,
       price: 199,
-      startDate: new Date.UTC(2023,1,1),
-      endDate:  new Date.UTC(2023,1,7)
+      startDate: new Date(Date.UTC(2023,1,1)),
+      endDate:  new Date(Date.UTC(2023,1,7))
     },{
       venueId: 3,
       groupId: 2,
@@ -52,8 +52,8 @@ module.exports = {
       type: 'upcoming',
       capacity: 1300,
       price: 2000,
-      startDate: new Date.UTC(2023, 5, 17),
-      endDate: new Date.UTC(2023, 6, 17)
+      startDate: new Date(Date.UTC(2023, 5, 17)),
+      endDate: new Date(Date.UTC(2023, 6, 17))
     },{
       venueId: 1,
       groupId: 3,
@@ -62,8 +62,8 @@ module.exports = {
       type: 'upcoming',
       capacity: 100000,
       price: 9999,
-      startDate: new Date.UTC(2023, 6, 5),
-      endDate:new Date.UTC(2023, 11, 27)
+      startDate: new Date(Date.UTC(2023, 6, 5)),
+      endDate:new Date(Date.UTC(2023, 11, 27))
     }])
 
     await Attendance.bulkCreate([{
@@ -97,9 +97,9 @@ module.exports = {
   async down (queryInterface, Sequelize) {
 
     const Op = Sequelize.Op;
-    options.tableName = 'Venues';
+    options.tableName = 'Attendances';
     await queryInterface.bulkDelete(options, {
-      state: { [Op.in]: ['Texas', 'California','State'] }
+      status: { [Op.in]: ['attending', 'not attending'] }
     }, {});
 
     options.tableName = 'Events';
@@ -107,10 +107,12 @@ module.exports = {
       name: { [Op.in]: ['Event 1', 'The Second Event', 'The Third Event'] }
     }, {});
 
-    options.tableName = 'Attendances';
+    options.tableName = 'Venues';
     await queryInterface.bulkDelete(options, {
-      status: { [Op.in]: ['attending', 'not attending'] }
+      state: { [Op.in]: ['Texas', 'California','State'] }
     }, {});
+
+
 
     return
   }

@@ -26,16 +26,16 @@ module.exports = {
     },]);
 
     await EventImage.bulkCreate([{
-      groupId:1,
+      eventId:1,
       url:"https://cdn2.thecatapi.com/images/3ih.jpg",
       preview: true
     },{
-      groupId:2,
+      eventId:2,
       url: "https://cdn2.thecatapi.com/images/199.gif",
       preview: false
     },
     {
-      groupId:3,
+      eventId:3,
       url:"https://cdn2.thecatapi.com/images/MTgzMjc5Mw.jpg",
       preview: true
     }]);
@@ -45,15 +45,17 @@ module.exports = {
 
     const Op = Sequelize.Op;
 
-    options.tableName = 'GroupImages';
-    await queryInterface.bulkDelete(options, {
-      preview: { [Op.in]: ['true', 'false'] }
-    }, {});
-
     options.tableName = 'EventImages';
     await queryInterface.bulkDelete(options, {
-      preview: { [Op.in]: ['true', 'false'] }
+      preview: { [Op.in]: [true, false] }
     }, {});
+
+    options.tableName = 'GroupImages';
+    await queryInterface.bulkDelete(options, {
+      preview: { [Op.in]: [true, false] }
+    }, {});
+
+
 
     return
   }

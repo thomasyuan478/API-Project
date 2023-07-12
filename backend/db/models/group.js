@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'userId'
       })
 
+
       Group.hasMany(models.Venue, {
         foreignKey: 'groupId'
       })
@@ -42,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     organizerId:{
      type: DataTypes.INTEGER,
      references: {model: 'Users'}
+
     } ,
     name: {
       type: DataTypes.STRING,

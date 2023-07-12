@@ -53,16 +53,19 @@ module.exports = {
         userId: 2,
         groupId: 1,
         status: 'pending'
+
       },
       {
         userId: 1,
         groupId: 3,
         status: 'member'
+
       },
       {
         userId: 2,
         groupId: 3,
         status: 'organizer'
+
       },
 
     ], {validate: true})
@@ -79,6 +82,7 @@ module.exports = {
     options.tableName = 'Memberships';
     await queryInterface.bulkDelete(options, {
       status: { [Op.in]: ['pending', 'organizer','member','co-host'] }
+
     }, {});
 
     options.tableName = 'Groups'

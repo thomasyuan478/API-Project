@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
       },
+
     eventId: {
       type: DataTypes.INTEGER,
     references: {

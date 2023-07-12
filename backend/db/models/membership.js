@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Membership.init({
+
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -31,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.ENUM('co-host','pending','member','organizer'),
       defaultValue: 'pending',
+
       allowNull: false
     }
   }, {

@@ -37,13 +37,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: {model: 'Groups'}
     },
+
     name: {
       type: DataTypes.STRING,
       allowNull: false
     },
     description: DataTypes.TEXT,
     type: {
+
       type: DataTypes.ENUM('upcoming','canceled','completed'),
+
       allowNull: false
     },
     capacity: DataTypes.INTEGER,

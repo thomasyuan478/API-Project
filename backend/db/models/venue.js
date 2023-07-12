@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
       Venue.belongsTo(models.Group, {
         foreignKey: 'groupId'
       })
@@ -31,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     groupId: {
       type: DataTypes.INTEGER,
       references: {model: 'Groups'}
+
     },
     address: {type: DataTypes.STRING},
     city: {type: DataTypes.STRING},

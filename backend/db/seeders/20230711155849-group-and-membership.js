@@ -25,7 +25,7 @@ module.exports = {
         organizerId: 3,
         name: 'The Yard',
         about: 'This is a group for interest about lawncare.',
-        type: 'active',
+        type: 'in person',
         private: false,
         city: 'Houston',
         state: 'Texas'
@@ -33,7 +33,7 @@ module.exports = {
         organizerId: 1,
         name: 'The Hatchery',
         about: 'Everything related to reptiles and platypuses',
-        type: 'active',
+        type: 'online',
         private: true,
         city: 'L.A.',
         state: 'California'
@@ -41,7 +41,7 @@ module.exports = {
         organizerId: 2,
         name: 'The Place',
         about: 'Secret Interest Group for the Place. If you know, you know',
-        type: 'active',
+        type: 'online',
         private: false,
         city: 'Novokribirsk',
         state: 'Ravka'

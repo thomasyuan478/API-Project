@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.ENUM,
       allowNull: false,
-      values: ['active','inactive']
+      values: ['online','in person']
     },
     private: {
       type: DataTypes.BOOLEAN,

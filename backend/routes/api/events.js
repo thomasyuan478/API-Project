@@ -1,5 +1,5 @@
 const express = require('express');
-const { Op } = require('sequelize');
+const { Op, json } = require('sequelize');
 
 const { Event } = require('../../db/models');
 const { Venue } = require('../../db/models');
@@ -16,13 +16,39 @@ const attendance = require('../../db/models/attendance');
 const router = express.Router();
 
 router.get('/', async (req,res) => {
+
+  let { page, size, name, type, startDate } = req.query;
+
+
+  if (!page) page = 1;
+  if (!size) size = 20;
+
+  page = parseInt(page);
+  size = parseInt(size);
+
+  const pagination = {};
+  if (page >= 1 && size >= 1) {
+      pagination.limit = size;
+      pagination.offset = size * (page - 1);
+  }
+
+  let filter = {};
+  if(name) filter.name = name;
+  if(type) filter.type = type;
+  if(startDate) filter.startDate = startDate;
+
+  console.log(filter);
+
   const events = await Event.findAll({
+    where: filter,
     include: [
       {model: Group},
       {model: Venue},
       {model: Attendance},
-      {model: EventImage} ]
+      {model: EventImage} ],
+      ...pagination
   });
+
 
   let eventList = [];
 
@@ -63,7 +89,7 @@ router.get('/', async (req,res) => {
     delete event.Venue.updatedAt;
   })
 
-  res.json(eventList);
+  res.json({Events: eventList});
 
 });
 
@@ -173,7 +199,6 @@ router.get('/:eventId', async (req,res) => {
   res.json(resEvent);
 });
 
-//INCOMPLETE
 router.post('/:eventId/attendance', requireAuth, async (req,res) => {
 
   const event = await Event.findByPk(req.params.eventId, {
@@ -188,19 +213,37 @@ router.post('/:eventId/attendance', requireAuth, async (req,res) => {
       }}
   });
 
-  if(!event){
-    res.status(404);
-    res.json({
+  if(!event)
+    return res.status(404).json({
       message: "Event could not be found"})
+
+  if(event.Group === null)
+    return res.status(403).json({message: "Current User must be a member of the group to request attendance" })
+
+  const attendance = await Attendance.findOne({
+    where: {
+      eventId: req.params.eventId,
+      userId: req.user.id
+    }
+  })
+
+  if(!attendance){
+    const requestAttend = await Attendance.create({
+      eventId: req.params.eventId,
+      userId: req.user.id,
+      status: "pending"
+    });
+
+    const resAttend = {
+      userId: req.user.id,
+      status: requestAttend.status
+    }
+
+    return res.json(resAttend);
   }
 
-  if(event.Group === null){
-    res.status(403);
-    res.json({
-      message: "Current User must be a member of the group to request attendance"
-    })
-  }
-
+  if(attendance.status === 'pending') return res.status(400).json({message: "Attendance is already been requested"})
+  if(attendance.status === 'attending') return res.status(400).json({message: "User is already an attendee of the event"})
 
 
 
@@ -258,6 +301,52 @@ router.post('/:eventId/images', requireAuth, async (req,res) => {
     }else{
     throw new Error("Current user is not an attendee, host or organizer");
   }
+});
+
+
+router.put('/:eventId/attendance', requireAuth, async (req,res) => {
+
+const { userId, status } = req.body;
+
+if(status === 'pending') return res.status(400).json({message: "Cannot change an attendance status to pending"})
+
+const event = await Event.findByPk(req.params.eventId, {
+  include: {
+    model: Group
+  }});
+
+if(!event) return res.status(400).json({message: "Event could not be found"});
+
+const membership = await Membership.findAll({
+  where: {
+    groupId: event.groupId,
+    userId: req.user.id,
+    status: 'co-host'
+  }});
+
+ const update = await Attendance.findOne({
+    where: {
+      userId: userId,
+      eventId: req.params.eventId
+    }});
+
+  if(!update) return res.status(400).json({message: "Attendance between the user and the event does not exist"})
+
+  if(membership[0] || event.Group.organizerId === req.user.id){
+
+    update.status = status;
+    await update.save();
+
+    const resUpdate = {
+      id: update.id,
+      eventId: update.eventId,
+      userId: update.userId,
+      status: update.status
+    }
+    return res.status(200).json(resUpdate);
+  }
+
+  return res.status(403).json({message: 'Forbidden'});
 });
 
 router.put('/:eventId', requireAuth, async (req,res) => {

@@ -127,10 +127,7 @@ const groups = await Group.findByPk(req.params.groupId, {
 
     res.json({Venues: venue});
 
-  }
-
-
-  throw new Error("Must be group owner or co-host to search for venues.")
+  } else throw new Error("Must be group owner or co-host to search for venues.")
 
 });
 
@@ -317,8 +314,7 @@ router.post('/:groupId/venues', requireAuth, async(req,res) => {
     res.json(resVenue);
     return;
   }
-
-  throw new Error("Must be group owner or co-host to create new venues.")
+else throw new Error("Must be group owner or co-host to create new venues.")
 });
 
 
@@ -409,6 +405,8 @@ router.post('/:groupId/events', requireAuth, async (req,res) => {
 
 router.post('/:groupId/membership', requireAuth, async (req,res) => {
 
+const { memberId, status } = req.body;
+
 const group = await Group.findByPk(req.params.groupId);
 
 if(!group){
@@ -418,8 +416,84 @@ if(!group){
   })
 }
 
-//create an index for userId/groupId
+const pendingMembership = await Membership.findOne({
+  attributes: ['status'],
+  where: {
+    userId: memberId,
+    groupId: req.params.groupId
+  }
+})
 
+if(!pendingMembership){
+  const newMembership = await Membership.create({
+  userId: memberId,
+  groupId: req.params.groupId,
+  status
+});
+
+const resMembership = {
+  memberId: memberId,
+  status: newMembership.status
+}
+
+res.json(resMembership);
+}
+if(pendingMembership.status === 'pending') res.status(400).json({message: "membership has already been requested."})
+if(pendingMembership.status === 'member' || pendingMembership.status === 'co-host' || pendingMembership.status === 'organizer') res.status(400).json({message: "User is already a member of the group"})
+});
+
+router.put('/:groupId/membership', requireAuth, async (req,res) => {
+
+const { memberId, status } = req.body;
+
+const group = await Group.findByPk(req.params.groupId);
+if(!group) return res.status(404).json({message: "Group could not be found"});
+
+const currentUser = await Membership.findOne({
+  where: {
+    userId: req.user.id
+  }
+})
+
+const update = await Membership.findOne({
+  where: {
+   userId: memberId,
+   groupId: req.params.groupId
+  }
+})
+if(!update) return res.status(404).json({message: "Membership between the user and the group does not exist"});
+
+if(status === 'member' && (req.user.id === group.ogranizerId || currentUser.status === 'co-host')){
+  update.status = status;
+  await update.save();
+
+  const resUpdate = {
+    id: update.id,
+    groupId: update.groupId,
+    memberId: update.memberId,
+    status: update.status
+  }
+
+  res.json(resUpdate);
+} else
+
+
+if(status === 'co-host' && req.user.id == group.organizerId){
+
+  update.status = status;
+  await update.save();
+
+  const resUpdate = {
+    id: update.id,
+    groupId: update.groupId,
+    memberId: update.memberId,
+    status: update.status
+  }
+
+  res.json(resUpdate);
+}
+
+res.status(403).json({message:"Forbidden"});
 });
 
 router.put('/:groupId', requireAuth, async (req,res) => {
@@ -455,32 +529,42 @@ router.put('/:groupId', requireAuth, async (req,res) => {
 });
 
 
-// router.delete('/:groupId/membership', requireAuth, async (req,res) => {
+router.delete('/:groupId/membership', requireAuth, async (req,res) => {
 
-// //body will be memberId
+const { memberId } = req.body;
 
-// const group = await Group.findByPk(req.params.groupId,
-//   {
-//     include: {model: Membership}
-//   });
+const group = await Group.findByPk(req.params.groupId,
+  {
+    include: {model: Membership}
+  });
 
-// if(!group){
-//   res.status(404);
-//   res.json({
-//     message: "Group couldn't be found"
-//   });
-// }
+if(!group){
+  res.status(404);
+  res.json({
+    message: "Group couldn't be found"
+  });
+}
 
-//   const { memberId } = req.body;
+const membership = await Membership.findOne({
+  where: {
+    userId: memberId,
+    groupId: group.id
+  }
+})
 
-//   if( memberId === req.user. id || group.organizerId === req.user.id){
-
-//   };
-//   res.json(group);
+if(!membership) res.status(404).json({message: "Membership does not exist for this user."})
 
 
+if( memberId === req.user.id || group.organizerId === req.user.id){
 
-// });
+  try{
+
+  } catch{
+    throw new Error("Something went wrong.")
+  }
+  };
+  res.status(403).json({message: "Forbidden"});
+});
 
 
 router.delete('/:groupId', async (req,res) => {

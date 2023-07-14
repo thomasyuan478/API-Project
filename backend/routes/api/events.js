@@ -314,6 +314,56 @@ router.put('/:eventId', requireAuth, async (req,res) => {
   }
 });
 
+router.delete('/:eventId/attendance', requireAuth, async (req,res) => {
+
+const event = await Event.findByPk(req.params.eventId,
+  {include: {model: Group}});
+
+if(!event){
+  res.status(404).json({
+    message: "Event could not be found"
+  })
+}
+
+const { userId } = req.body;
+
+const attendance = await Attendance.findOne({
+  where: {
+    userId: userId,
+    eventId: req.params.eventId
+  }
+});
+
+if(!attendance){
+  res.status(404).json({
+    message: "Attendance does not exist for this user"
+  })
+}
+
+if(req.user.id === userId || req.user.id === event.Group.organizerId){
+try{
+
+  await attendance.destroy();
+
+  res.json({
+    message: "Successfully deleted"
+  })
+}
+catch {
+  throw new Error("Something went wrong");
+}
+}else {
+
+
+  res.status(403);
+  res.json({
+    message: "Current User must be organizer or the same id as being deleted"
+  });
+
+}
+});
+
+
 router.delete('/:eventId', requireAuth, async (req,res) => {
   const event = await Event.findByPk(req.params.eventId,
     {include: {model: Group}});
@@ -353,6 +403,6 @@ router.delete('/:eventId', requireAuth, async (req,res) => {
       message: "Current user must be owner or co-host"
     })
   }
-})
+});
 
 module.exports = router;

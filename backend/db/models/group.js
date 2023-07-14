@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Group.hasMany(models.GroupImage, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
+        onDelete: 'cascade',
+        hooks: true
       });
 
       // Group.belongsToMany(models.User, {
@@ -26,15 +28,21 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       Group.hasMany(models.Membership, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
+        onDelete: 'cascade',
+        hooks: true
       })
 
       Group.hasMany(models.Event, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
+        onDelete: 'cascade',
+        hooks: true
       })
 
       Group.hasMany(models.Venue, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
+        onDelete: 'cascade',
+        hooks: true
       })
 
       // Group.belongsToMany(models.Venue, {
@@ -53,8 +61,9 @@ module.exports = (sequelize, DataTypes) => {
       },
     organizerId:{
      type: DataTypes.INTEGER,
-     references: {model: 'Users'}
-
+     allowNull: false,
+     references: {model: 'Users'},
+     onDelete: 'cascade'
     } ,
     name: {
       type: DataTypes.STRING(60),
@@ -73,7 +82,7 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.ENUM,
       allowNull: false,
-      values: ['online','in person']
+      values: ['Online','In person']
     },
     private: {
       type: DataTypes.BOOLEAN,

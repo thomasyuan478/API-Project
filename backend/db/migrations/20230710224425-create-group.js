@@ -18,6 +18,7 @@ module.exports = {
       organizerId: {
         type: Sequelize.INTEGER,
         references: {model: 'Users'},
+        onDelete: 'cascade',
         allowNull: false
       },
       name: {
@@ -29,7 +30,7 @@ module.exports = {
         allowNull: false
       },
       type: {
-        type: Sequelize.ENUM('in person', 'online'),
+        type: Sequelize.ENUM('In person', 'Online'),
         allowNull: false
       },
       private: {

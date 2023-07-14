@@ -24,15 +24,16 @@ module.exports = (sequelize, DataTypes) => {
       },
     eventId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {model: 'Events'}
     },
     userId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {model: 'Users'}
     },
     status: {
       type: DataTypes.ENUM('attending', 'waitlist', 'pending'),
-
       allowNull: false
     }
   }, {

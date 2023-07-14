@@ -36,15 +36,24 @@ module.exports = (sequelize, DataTypes) => {
     },
     address: {
       type: DataTypes.STRING,
-    allowNull: false},
-    city: {type: DataTypes.STRING,
-    allowNull: false},
-    state: {type: DataTypes.STRING,
-      allowNull: false},
-    lat: {type: DataTypes.DECIMAL,
-    allowNull: false},
-    lng: {type: DataTypes.DECIMAL,
-    allowNull: false}
+      allowNull: false
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lat: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+  },
+    lng: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Venue',

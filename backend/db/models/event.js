@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Event.hasMany(models.EventImage, {
-        foreignKey: 'eventId'
+        foreignKey: 'eventId',
+        onDelete: 'cascade',
+        hooks: true
       })
 
       Event.belongsTo(models.Group, {
@@ -23,7 +25,9 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       Event.hasMany(models.Attendance, {
-        foreignKey: 'eventId'
+        foreignKey: 'eventId',
+        onDelete: 'cascade',
+        hooks: true
       })
 
       Event.belongsToMany(models.User, {
@@ -43,11 +47,15 @@ module.exports = (sequelize, DataTypes) => {
       },
     venueId: {
       type: DataTypes.INTEGER,
-      references: {model: 'Venues'}
+      allowNull: false,
+      references: {model: 'Venues'},
+      onDelete: 'cascade'
     },
     groupId: {
       type: DataTypes.INTEGER,
-      references: {model: 'Groups'}
+      allowNull: false,
+      references: {model: 'Groups'},
+      onDelete: 'cascade'
     },
 
     name: {
@@ -61,14 +69,18 @@ module.exports = (sequelize, DataTypes) => {
 
       allowNull: false
     },
-    capacity: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
+    capacity: {
+      type: DataTypes.INTEGER,
+    allowNull: false},
+    price: {
+      type: DataTypes.DECIMAL(5,2),
+      allowNull: false},
     startDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false
     },
     endDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false
   }
   }, {

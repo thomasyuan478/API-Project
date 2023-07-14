@@ -27,9 +27,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     references: {
       model: 'Events'
-    }
     },
-    url: DataTypes.STRING,
+    onDelete: 'cascade'
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false},
     preview: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

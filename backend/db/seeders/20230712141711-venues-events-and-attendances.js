@@ -42,8 +42,8 @@ module.exports = {
       type: 'in person',
       capacity: 2300,
       price: 199,
-      startDate: new Date(Date.UTC(2023,1,1)),
-      endDate:  new Date(Date.UTC(2023,1,7))
+      startDate: new Date('2023-1-1'),
+      endDate:  new Date('2023-1-7')
     },{
       venueId: 3,
       groupId: 2,
@@ -52,8 +52,8 @@ module.exports = {
       type: 'online',
       capacity: 1300,
       price: 2000,
-      startDate: new Date(Date.UTC(2023, 5, 17)),
-      endDate: new Date(Date.UTC(2023, 6, 17))
+      startDate: new Date('2023-05-17'),
+      endDate: new Date('2023-06-17')
     },{
       venueId: 1,
       groupId: 3,
@@ -62,8 +62,8 @@ module.exports = {
       type: 'online',
       capacity: 100000,
       price: 9999,
-      startDate: new Date(Date.UTC(2023, 6, 5)),
-      endDate:new Date(Date.UTC(2023, 11, 27))
+      startDate: new Date('2023-6-5'),
+      endDate:new Date('2023-6-18')
     }])
 
     await Attendance.bulkCreate([{

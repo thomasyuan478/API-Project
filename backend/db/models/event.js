@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         hooks: true
       })
 
+
       Event.belongsToMany(models.User, {
         through: models.Attendance,
         foreignKey: 'eventId',
@@ -55,6 +56,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       references: {model: 'Groups'},
       onDelete: 'cascade'
+
     },
 
     name: {

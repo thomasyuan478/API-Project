@@ -50,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       //   foreignKey: 'groupId',
       //   otherKey: 'venueId'
       // })
+
     }
   }
   Group.init({

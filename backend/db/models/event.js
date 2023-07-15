@@ -11,8 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Event.hasMany(models.EventImage, {
-        foreignKey: 'eventId'
+        foreignKey: 'eventId',
+        onDelete: 'cascade',
+        hooks: true
       })
+
+      Event.belongsTo(models.Group, {
+        foreignKey: 'groupId'
+      })
+
+      Event.belongsTo(models.Venue, {
+        foreignKey: 'venueId'
+      })
+
+      Event.hasMany(models.Attendance, {
+        foreignKey: 'eventId',
+        onDelete: 'cascade',
+        hooks: true
+      })
+
 
       Event.belongsToMany(models.User, {
         through: models.Attendance,
@@ -31,11 +48,15 @@ module.exports = (sequelize, DataTypes) => {
       },
     venueId: {
       type: DataTypes.INTEGER,
-      references: {model: 'Venues'}
+      references: {model: 'Venues'},
+      onDelete: 'cascade'
     },
     groupId: {
       type: DataTypes.INTEGER,
-      references: {model: 'Groups'}
+      allowNull: false,
+      references: {model: 'Groups'},
+      onDelete: 'cascade'
+
     },
 
     name: {
@@ -45,18 +66,22 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     type: {
 
-      type: DataTypes.ENUM('upcoming','canceled','completed'),
+      type: DataTypes.ENUM('in person','online'),
 
       allowNull: false
     },
-    capacity: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
+    capacity: {
+      type: DataTypes.INTEGER,
+    allowNull: false},
+    price: {
+      type: DataTypes.DECIMAL(5,2),
+      allowNull: false},
     startDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false
     },
     endDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false
   }
   }, {

@@ -6,8 +6,22 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Group, {
-        foreignKey: 'organizerId'
+        foreignKey: 'organizerId',
+        onDelete: 'cascade',
+        hooks: true
       });
+
+      User.hasMany(models.Attendance, {
+        foreignKey: 'userId',
+        onDelete: 'cascade',
+        hooks: true
+      })
+
+      User.hasMany(models.Membership, {
+        foreignKey: 'userId',
+        onDelete: 'cascade',
+        hooks: true
+      })
 
       User.belongsToMany(models.Group, {
         through: models.Membership,
@@ -35,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       firstName: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
           isAlpha: true,
           notEmpty: true
@@ -42,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       lastName: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
           isAlpha: true,
           notEmpty: true

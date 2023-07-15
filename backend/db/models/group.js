@@ -12,25 +12,45 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Group.hasMany(models.GroupImage, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
+        onDelete: 'cascade',
+        hooks: true
       });
 
-      Group.belongsToMany(models.User, {
-        through: models.Membership,
-        foreignKey: 'groupId',
-        otherKey: 'userId'
+      // Group.belongsToMany(models.User, {
+      //   through: models.Membership,
+      //   foreignKey: 'groupId',
+      //   otherKey: 'userId'
+      // })
+
+      Group.belongsTo(models.User, {
+        foreignKey: 'organizerId'
       })
 
+      Group.hasMany(models.Membership, {
+        foreignKey: 'groupId',
+        onDelete: 'cascade',
+        hooks: true
+      })
+
+      Group.hasMany(models.Event, {
+        foreignKey: 'groupId',
+        onDelete: 'cascade',
+        hooks: true
+      })
 
       Group.hasMany(models.Venue, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
+        onDelete: 'cascade',
+        hooks: true
       })
 
-      Group.belongsToMany(models.Venue, {
-        through: models.Event,
-        foreignKey: 'groupId',
-        otherKey: 'venueId'
-      })
+      // Group.belongsToMany(models.Venue, {
+      //   through: models.Event,
+      //   foreignKey: 'groupId',
+      //   otherKey: 'venueId'
+      // })
+
     }
   }
   Group.init({
@@ -42,28 +62,39 @@ module.exports = (sequelize, DataTypes) => {
       },
     organizerId:{
      type: DataTypes.INTEGER,
-     references: {model: 'Users'}
-
+     allowNull: false,
+     references: {model: 'Users'},
+     onDelete: 'cascade'
     } ,
     name: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING(60),
+      allowNull: false,
+      validate: {
+        len: [2,60]
+      }
     },
     about: {
       type: DataTypes.TEXT,
-    allowNull: false
+      allowNull: false,
+      validate: {
+        len: [50,100]
+      }
     },
     type: {
       type: DataTypes.ENUM,
       allowNull: false,
-      values: ['active','inactive']
+      values: ['Online','In person']
     },
     private: {
       type: DataTypes.BOOLEAN,
       allowNull: false
   },
-    city: DataTypes.STRING,
-    state: DataTypes.STRING
+    city: {
+      type: DataTypes.STRING,
+    allowNull: false},
+    state: {
+      type: DataTypes.STRING,
+    allowNull: false}
   }, {
     sequelize,
     modelName: 'Group',

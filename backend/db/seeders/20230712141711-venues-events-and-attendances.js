@@ -39,31 +39,31 @@ module.exports = {
       groupId: 1,
       name: 'Event 1',
       description: 'This is the firste event in the database',
-      type: 'upcoming',
+      type: 'in person',
       capacity: 2300,
       price: 199,
-      startDate: new Date(Date.UTC(2023,1,1)),
-      endDate:  new Date(Date.UTC(2023,1,7))
+      startDate: new Date('2023-1-1'),
+      endDate:  new Date('2023-1-7')
     },{
       venueId: 3,
       groupId: 2,
       name: 'The Second Event',
       description: 'Come Celebrate something with us!',
-      type: 'upcoming',
+      type: 'online',
       capacity: 1300,
       price: 2000,
-      startDate: new Date(Date.UTC(2023, 5, 17)),
-      endDate: new Date(Date.UTC(2023, 6, 17))
+      startDate: new Date('2023-05-17'),
+      endDate: new Date('2023-06-17')
     },{
       venueId: 1,
       groupId: 3,
       name: 'The Third Event',
       description: 'The Final Event',
-      type: 'upcoming',
+      type: 'online',
       capacity: 100000,
       price: 9999,
-      startDate: new Date(Date.UTC(2023, 6, 5)),
-      endDate:new Date(Date.UTC(2023, 11, 27))
+      startDate: new Date('2023-6-5'),
+      endDate:new Date('2023-6-18')
     }])
 
     await Attendance.bulkCreate([{

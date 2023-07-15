@@ -17,28 +17,34 @@ module.exports = {
       },
       venueId: {
         type: Sequelize.INTEGER,
-        references: {model: 'Venues'}
+        references: {model: 'Venues'},
+        onDelete:'cascade'
       },
       groupId: {
         type: Sequelize.INTEGER,
-        references: {model: 'Groups'}
+        allowNull: false,
+        references: {model: 'Groups'},
+        onDelete: 'cascade'
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false
       },
       description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       type: {
-        type: Sequelize.ENUM('upcoming','canceled','completed'),
+        type: Sequelize.ENUM('online','in person'),
         allowNull:false
       },
       capacity: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL(5,2),
+        allowNull: false
       },
       startDate: {
         type: Sequelize.DATE,

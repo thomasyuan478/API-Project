@@ -24,24 +24,24 @@ module.exports = {
       {
         organizerId: 3,
         name: 'The Yard',
-        about: 'This is a group for interest about lawncare.',
-        type: 'active',
+        about: 'This is a group for interest about lawncare. We do lawncare because we care.',
+        type: 'in person',
         private: false,
         city: 'Houston',
         state: 'Texas'
       },{
         organizerId: 1,
         name: 'The Hatchery',
-        about: 'Everything related to reptiles and platypuses',
-        type: 'active',
+        about: 'Everything related to reptiles and platypuses. Also features anything else egg related.',
+        type: 'online',
         private: true,
         city: 'L.A.',
         state: 'California'
       },{
         organizerId: 2,
         name: 'The Place',
-        about: 'Secret Interest Group for the Place. If you know, you know',
-        type: 'active',
+        about: 'Secret Interest Group for the Place. If you know, you know. The Place also knows if you dont know',
+        type: 'online',
         private: false,
         city: 'Novokribirsk',
         state: 'Ravka'

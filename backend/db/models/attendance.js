@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Attendance.belongsTo(models.Event, {
+        foreignKey: 'eventId'
+      })
     }
   }
   Attendance.init({
@@ -22,15 +24,16 @@ module.exports = (sequelize, DataTypes) => {
       },
     eventId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {model: 'Events'}
     },
     userId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {model: 'Users'}
     },
     status: {
-      type: DataTypes.ENUM('attending', 'not attending'),
-
+      type: DataTypes.ENUM('attending', 'waitlist', 'pending'),
       allowNull: false
     }
   }, {

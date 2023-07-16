@@ -9,7 +9,8 @@ const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
-router.put('/:venueId', requireAuth, async (req,res) => {
+//VERIFIED
+router.put('/:venueId', requireAuth, async (req,res,next) => {
 
   const venue = await Venue.findByPk(req.params.venueId,
     {include: [
@@ -17,10 +18,12 @@ router.put('/:venueId', requireAuth, async (req,res) => {
     });
 
  if(!venue){
-    throw new Error("Venue couldn't be found")
+    const err = new Error("Venue couldn't be found");
+    err.status = 404;
+    return next(err);
   }
 
-  const valid = await Membership.findAll({
+  const valid = await Membership.findOne({
     where: {
       groupId: venue.Group.id,
       userId: req.user.id,
@@ -30,8 +33,22 @@ router.put('/:venueId', requireAuth, async (req,res) => {
 
   const { address, city, state, lat, lng } = req.body;
 
+  if(!address || !city || !state || !lat || !lng || typeof lat !== "number" || typeof lng !== "number"){
+    const err = new Error("Bad request");
+    err.status = 400;
+    err.errors = {};
+    if(!address) err.errors.address = "Street Address is required";
+    if(!city) err.errors.city = "City is required";
+    if(!state) err.errors.state = "State is required";
+    if(!lat) err.errors.lat = "Latitude is required";
+    else if(typeof lat !== "number") err.errors.lat = "Latitude is not valid";
+    if(!lng) err.errors.lng = "Longitdue is required";
+    else if (typeof lng !== "number") err.errors.lng = "Longitude is not valid";
+    return next (err);
+  }
 
-  if(valid[0] || venue.Group.organizerId === req.user.id){
+
+  if(valid || venue.Group.organizerId === req.user.id){
     venue.address = address ?? venue.address;
     venue.city = city ?? venue.city;
     venue.state = state ?? venue.state;
@@ -54,8 +71,9 @@ router.put('/:venueId', requireAuth, async (req,res) => {
     return;
   };
 
-  throw new Error("Must be group owner or co-host to edit venues.")
-
+  const err = new Error("Forbidden: Must be group owner or co-host to edit venues.");
+  err.status = 403;
+  next(err);
 
 })
 

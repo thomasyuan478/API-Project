@@ -94,6 +94,7 @@ router.get('/', async (req,res) => {
 
 });
 
+
 router.get('/:eventId/attendees', async (req,res,next) => {
 
   const event = await Event.findByPk(req.params.eventId,
@@ -193,7 +194,6 @@ router.get('/:eventId', async (req,res) => {
     err.status = 404;
     return next(err);
   }
-
 
   const resEvent = event.toJSON();
   delete resEvent.createdAt;

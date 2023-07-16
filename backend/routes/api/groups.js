@@ -18,6 +18,7 @@ const user = require('../../db/models/user');
 const router = express.Router();
 
 //VERIFIED
+
 router.get('/', async (req, res) => {
   const groups = await Group.findAll({
     include: [
@@ -72,6 +73,7 @@ router.get('/current', requireAuth, async(req,res) => {
 
   if(groups.length === 0 && membergroups.length === 0) return res.json({message: "User is not part of any groups."})
 
+
   let groupsList = [];
   groups.forEach(group => {groupsList.push(group.toJSON())});
   membergroups.forEach(group => {groupsList.push(group.toJSON())});
@@ -107,6 +109,7 @@ const groups = await Group.findByPk(req.params.groupId, {
   }
   }]})
 
+
   const valid = await Membership.findOne({
     where: {
       groupId: req.params.groupId,
@@ -132,6 +135,7 @@ const groups = await Group.findByPk(req.params.groupId, {
 
     res.json({Venues: venue});
 
+
   } else {
     const err = new Error("Forbidden: Must be group owner or co-host to search for venues.")
     err.status = 403;
@@ -144,6 +148,7 @@ router.get('/:groupId/events', async (req, res) => {
 
   const group = await Group.findByPk(req.params.groupId);
   if(!group) return res.status(404).json({message: "Group could not be found"})
+
 
   const events = await Event.findAll({
     where: {
@@ -228,6 +233,7 @@ router.get('/:id', async (req,res,next) => {
     ]
   })
 
+
   if(!group){
     const err = new Error("Group cannot be found");
     err.status= 404;
@@ -238,6 +244,7 @@ router.get('/:id', async (req,res,next) => {
       code: err.status
     })
   }
+
   const resGroup = group.toJSON();
 
   resGroup.GroupImages.forEach(image => {
@@ -263,6 +270,7 @@ router.get('/:id', async (req,res,next) => {
   res.json(resGroup);
 });
 
+
 //VERIFIED
 router.post('/', requireAuth, async (req, res, next) => {
 
@@ -282,7 +290,7 @@ router.post('/', requireAuth, async (req, res, next) => {
     if(!state) err.errors.state = "State is required";
     return next(err);
   }
-
+  
   const newGroup = await Group.create({
     organizerId: req.user.id,
     name,
@@ -333,6 +341,7 @@ router.post('/:groupId/venues', requireAuth, async(req, res, next) => {
 
   if(valid || group.organizerId === req.user.id){
 
+
     const newVenue = await Venue.create({
       groupId: group.id,
       address,
@@ -355,6 +364,7 @@ router.post('/:groupId/venues', requireAuth, async(req, res, next) => {
     res.json(resVenue);
     return;
   }
+
 else {
   const err = new Error("Forbidden: Must be group owner or co-host to create new venues.");
   err.status = 403;
@@ -633,6 +643,7 @@ if( memberId === req.user.id || group.organizerId === req.user.id){
 });
 
 router.delete('/:groupId', requireAuth, async (req,res) => {
+
   const group = await Group.findByPk(req.params.groupId);
 
   if(!group){
@@ -655,5 +666,6 @@ router.delete('/:groupId', requireAuth, async (req,res) => {
   }
 
 });
+
 
 module.exports = router;

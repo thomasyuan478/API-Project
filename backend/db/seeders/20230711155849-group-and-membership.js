@@ -50,8 +50,32 @@ module.exports = {
 
     await Membership.bulkCreate([
       {
-        userId: 2,
+        userId: 3,
         groupId: 1,
+        status: 'organizer'
+
+      },
+      {
+        userId: 1,
+        groupId: 2,
+        status: 'organizer'
+
+      },
+      {
+        userId: 2,
+        groupId: 3,
+        status: 'organizer'
+
+      },
+      {
+        userId: 3,
+        groupId: 2,
+        status: 'member'
+
+      },
+      {
+        userId: 3,
+        groupId: 3,
         status: 'pending'
 
       },
@@ -62,9 +86,21 @@ module.exports = {
 
       },
       {
+        userId: 1,
+        groupId: 1,
+        status: 'pending'
+
+      },
+      {
         userId: 2,
-        groupId: 3,
-        status: 'organizer'
+        groupId: 1,
+        status: 'pending'
+
+      },
+      {
+        userId: 2,
+        groupId: 2,
+        status: 'member'
 
       },
 

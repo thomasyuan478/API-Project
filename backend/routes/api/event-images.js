@@ -12,6 +12,8 @@ const { requireAuth } = require('../../utils/auth');
 const router = express.Router();
 
 
+//VERIFIED
+
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
 
   const image = await EventImage.findByPk(req.params.imageId, {
@@ -25,14 +27,11 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
 
   if(!image){
     const err = new Error("Group Image cannot be found");
-    err.status(404);
+    err.status= 404;
     return next(err);
-    res.status(404).json({
-      message: "Group Image cannot be found"
-    })
   }
 
-  const validMembership = await Membership.findAll({
+  const validMembership = await Membership.findOne({
     where: {
       groupId: image.Event.Group.id,
       userId: req.user.id,
@@ -40,7 +39,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     }
   })
 
-  if(validMembership[0] || image.Event.Group.organizerId === req.user.id){
+  if(validMembership || image.Event.Group.organizerId === req.user.id){
 
     try{
 
@@ -55,10 +54,9 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     }
 
   } else {
-    res.status(403);
-    res.json({
-      message: "Current User must be organizer or co-host"
-    })
+    const err = new Error("Current User must be organizer or co-host");
+    err.status = 403;
+    return next(err);
   }
 
 

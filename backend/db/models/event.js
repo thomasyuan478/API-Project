@@ -75,11 +75,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(5,2),
       allowNull: false},
     startDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false
     },
     endDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false
   }
   }, {

@@ -77,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
       validate: {
-        len: [50,100]
+        len: [50,140]
       }
     },
     type: {
@@ -88,13 +88,15 @@ module.exports = (sequelize, DataTypes) => {
     private: {
       type: DataTypes.BOOLEAN,
       allowNull: false
-  },
+    },
     city: {
       type: DataTypes.STRING,
-    allowNull: false},
+      allowNull: false
+    },
     state: {
       type: DataTypes.STRING,
-    allowNull: false}
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Group',

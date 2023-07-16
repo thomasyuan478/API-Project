@@ -153,6 +153,10 @@ router.get('/:groupId/events', async (req, res, next) => {
     return next(err);
   }
 
+  const group = await Group.findByPk(req.params.groupId);
+  if(!group) return res.status(404).json({message: "Group could not be found"})
+
+
   const events = await Event.findAll({
     where: {
       groupId: req.params.groupId
@@ -275,6 +279,7 @@ router.get('/:groupId/members', async (req,res,next) => {
     });
 
 //VERIFIED *****************************************************
+
 router.get('/:id', async (req,res,next) => {
 
   const group = await Group.findByPk(req.params.id, {
@@ -321,6 +326,7 @@ router.get('/:id', async (req,res,next) => {
 
   res.json(resGroup);
 });
+
 
 //VERIFIED
 router.post('/', requireAuth, async (req, res, next) => {
@@ -424,6 +430,7 @@ else {
 });
 
 //VERIFIED *****************************************************
+
 router.post('/:groupId/images', requireAuth, async (req,res,next) => {
 
   const { url, preview } = req.body;
@@ -724,6 +731,7 @@ if(status === 'co-host' && req.user.id == group.organizerId){
 });
 
 //VERIFIED *********************************************
+
 router.put('/:groupId', requireAuth, async (req,res,next) => {
 
   const group = await Group.findOne({
@@ -776,6 +784,7 @@ if(!name || name.length > 60 || about.length < 50 || !(type === "Online" || type
 
 //VERIFIED
 router.delete('/:groupId/membership', requireAuth, async (req,res,next) => {
+
 
 const { memberId } = req.body;
 
@@ -837,6 +846,7 @@ if( memberId === req.user.id || group.organizerId === req.user.id){
 
 //
 router.delete('/:groupId', requireAuth, async (req,res, next) => {
+
   const group = await Group.findByPk(req.params.groupId);
 
   if(!group){

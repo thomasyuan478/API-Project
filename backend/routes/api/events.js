@@ -1,5 +1,5 @@
 const express = require('express');
-const { Op, json } = require('sequelize');
+const { Op } = require('sequelize');
 
 const { Event } = require('../../db/models');
 const { Venue } = require('../../db/models');
@@ -15,6 +15,7 @@ const attendance = require('../../db/models/attendance');
 
 const router = express.Router();
 
+//CURRENT
 router.get('/', async (req,res) => {
 
   let { page, size, name, type, startDate } = req.query;
@@ -93,7 +94,8 @@ router.get('/', async (req,res) => {
 
 });
 
-router.get('/:eventId/attendees', async (req,res) => {
+
+router.get('/:eventId/attendees', async (req,res,next) => {
 
   const event = await Event.findByPk(req.params.eventId,
     {include: {model: Group}});
@@ -172,6 +174,7 @@ if(validMembership[0] || event.Group.organizerId === req.user.id){
 
 });
 
+//VERIFIED
 router.get('/:eventId', async (req,res) => {
   const event = await Event.findByPk(req.params.eventId, {
     include: [{
@@ -186,6 +189,11 @@ router.get('/:eventId', async (req,res) => {
     }]
   })
 
+  if(!event){
+    const err = new Error("Event could not be found");
+    err.status = 404;
+    return next(err);
+  }
 
   const resEvent = event.toJSON();
   delete resEvent.createdAt;

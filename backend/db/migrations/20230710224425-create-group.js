@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false
       },
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(60),
         allowNull: false
       },
       about: {
@@ -38,10 +38,12 @@ module.exports = {
         allowNull: false
       },
       city: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       state: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

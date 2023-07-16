@@ -11,7 +11,8 @@ const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
-router.delete('/:imageId', requireAuth, async (req,res) => {
+
+router.delete('/:imageId', requireAuth, async (req, res, next) => {
 
   const image = await EventImage.findByPk(req.params.imageId, {
     include: {
@@ -23,8 +24,10 @@ router.delete('/:imageId', requireAuth, async (req,res) => {
   });
 
   if(!image){
-    res.status(404);
-    res.json({
+    const err = new Error("Group Image cannot be found");
+    err.status(404);
+    return next(err);
+    res.status(404).json({
       message: "Group Image cannot be found"
     })
   }

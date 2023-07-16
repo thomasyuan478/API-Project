@@ -10,19 +10,20 @@ const { JsonWebTokenError } = require('jsonwebtoken');
 
 const router = express.Router();
 
-router.delete('/:imageId', requireAuth, async (req,res) => {
+//CURRRENT
+router.delete('/:imageId', requireAuth, async (req,res,next) => {
 
   const image = await GroupImage.findByPk(req.params.imageId);
 
   if(!image){
-    return res.status(404).json({
-      message: "Group Image cannot be found"
-    });
+    const err = new Error("Group Image cannot be found");
+    err.status= 404;
+    return next(err);
   }
 
   const group = await Group.findByPk(image.groupId);
 
-  const validMembership = await Membership.findAll({
+  const validMembership = await Membership.findOne({
     where: {
       groupId: image.groupId,
       userId: req.user.id,
@@ -30,7 +31,7 @@ router.delete('/:imageId', requireAuth, async (req,res) => {
     }
   })
 
-  if(validMembership[0] || group.organizerId === req.user.id){
+  if(validMembership || group.organizerId === req.user.id){
 
     try{
 
@@ -45,10 +46,9 @@ router.delete('/:imageId', requireAuth, async (req,res) => {
     }
 
   } else {
-    res.status(403);
-    res.json({
-      message: "Current User must be organizer or co-host"
-    })
+    const err = new Error("Current User must be organizer or co-host");
+    err.status = 403;
+    return next(err);
   }
 
 });

@@ -26,11 +26,13 @@ module.exports = (sequelize, DataTypes) => {
       },
     userId: {
       type: DataTypes.INTEGER,
-      references: {model: 'Users'}
+      references: {model: 'Users'},
+      onDelete: 'cascade'
     },
     groupId: {
       type: DataTypes.INTEGER,
-      references: {model: 'Groups'}
+      references: {model: 'Groups'},
+      onDelete: 'cascade'
     },
     status: {
       type: DataTypes.ENUM('co-host','pending','member','organizer'),

@@ -1,5 +1,5 @@
 const express = require('express');
-const { Op, json } = require('sequelize');
+const { Op } = require('sequelize');
 
 const { Event } = require('../../db/models');
 const { Venue } = require('../../db/models');

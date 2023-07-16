@@ -290,7 +290,7 @@ router.post('/', requireAuth, async (req, res, next) => {
     if(!state) err.errors.state = "State is required";
     return next(err);
   }
-  
+
   const newGroup = await Group.create({
     organizerId: req.user.id,
     name,

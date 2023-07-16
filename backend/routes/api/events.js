@@ -15,6 +15,7 @@ const attendance = require('../../db/models/attendance');
 
 const router = express.Router();
 
+//CURRENT
 router.get('/', async (req,res) => {
 
   let { page, size, name, type, startDate } = req.query;

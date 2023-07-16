@@ -186,6 +186,10 @@ router.get('/:eventId', async (req,res) => {
     }]
   })
 
+  if(!event){
+    return res.status(404).json({message: "Event could not be found"})
+  }
+
 
   const resEvent = event.toJSON();
   delete resEvent.createdAt;

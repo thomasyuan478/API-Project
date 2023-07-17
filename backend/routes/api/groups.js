@@ -33,6 +33,10 @@ router.get('/', async (req, res) => {
 
     group.numMembers = group.Memberships.length;
 
+
+    group.createdAt = group.createdAt.toString().slice(4,24);
+    group.updatedAt = group.updatedAt.toString().slice(4,24);
+
     group.GroupImages.forEach(image => {
       group.previewImage = image.url;
     });
@@ -79,6 +83,9 @@ router.get('/current', requireAuth, async(req,res) => {
   groupsList.forEach(group => {
 
     group.numMembers = group.Memberships.length;
+
+    group.createdAt = group.createdAt.toString().slice(4,24);
+    group.updatedAt = group.updatedAt.toString().slice(4,24)
 
     group.GroupImages.forEach(image => {
       group.previewImage = image.url;
@@ -177,6 +184,9 @@ router.get('/:groupId/events', async (req, res, next) => {
 
     event.numAttending = event.Attendances.length;
     delete event.Attendances;
+
+    event.startDate = event.startDate.toString().slice(4,24);
+    event.endDate = event.endDate.toString().slice(4,24);
 
     event.EventImages.forEach(image => {
       event.previewImage = image.url;
@@ -294,6 +304,9 @@ router.get('/:id', async (req,res,next) => {
   }
   const resGroup = group.toJSON();
 
+  resGroup.startDate = resGroup.createdAt.toString().slice(4,24);
+  resGroup.updatedAt = resGroup.updatedAt.toString().slice(4,24);
+
   resGroup.GroupImages.forEach(image => {
     delete image.groupId
     delete image.createdAt
@@ -347,7 +360,13 @@ router.post('/', requireAuth, async (req, res, next) => {
     state
   });
 
-  return res.status(201).json(newGroup);
+  const resGroup = newGroup.toJSON();
+
+  resGroup.createdAt = resGroup.createdAt.toString().slice(4,24);
+  resGroup.updatedAt = resGroup.updatedAt.toString().slice(4,24);
+
+
+  return res.status(201).json(resGroup);
 });
 
 //VERIFIED *****************************************************
@@ -754,17 +773,24 @@ if(!name || name.length > 60 || about.length < 50 || !(type === "Online" || type
   return next(err);
 }
 
-  group.name = name ?? group.name;
-  group.about = about ?? group.about;
-  group.type = type ?? group.type;
-  group.private = private ?? group.private;
-  group.city = city ?? group.city;
-  group.state = state ?? group.state;
+  group.name = name;
+  group.about = about;
+  group.type = type;
+  group.private = private;
+  group.city = city;
+  group.state = state;
 
 
   await group.save();
 
-  res.json(group);
+  const resGroup = group.toJSON();
+
+  resGroup.createdAt = resGroup.createdAt.toString().slice(4,24);
+  resGroup.updatedAt = resGroup.updatedAt.toString().slice(4,24);
+
+
+
+  res.json(resGroup);
 });
 
 //VERIFIED

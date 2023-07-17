@@ -36,7 +36,7 @@ router.get('/', async (req,res) => {
   let filter = {};
   if(name) filter.name = name;
   if(type) filter.type = type;
-  if(startDate) filter.startDate = startDate;
+  if(startDate) filter.startDate = { [Op.gte]: startDate};
 
   console.log(filter);
 
@@ -56,6 +56,9 @@ router.get('/', async (req,res) => {
   events.forEach(event => eventList.push(event.toJSON()));
 
   eventList.forEach(event=> {
+
+    event.startDate = event.startDate.toString().slice(4,24);
+    event.endDate = event.endDate.toString().slice(4,24);
 
     event.numAttending = event.Attendances.length;
     event.EventImages.forEach(image => {
@@ -82,12 +85,14 @@ router.get('/', async (req,res) => {
     delete event.Group.createdAt;
     delete event.Group.updatedAt;
 
-    delete event.Venue.groupId;
-    delete event.Venue.address;
-    delete event.Venue.lat;
-    delete event.Venue.lng;
-    delete event.Venue.createdAt;
-    delete event.Venue.updatedAt;
+    if(event.Venue !== null){
+      delete event.Venue.groupId;
+      delete event.Venue.address;
+      delete event.Venue.lat;
+      delete event.Venue.lng;
+      delete event.Venue.createdAt;
+      delete event.Venue.updatedAt;
+    }
   })
 
   res.json({Events: eventList});
@@ -196,6 +201,8 @@ router.get('/:eventId', async (req,res) => {
 
 
   const resEvent = event.toJSON();
+  resEvent.startDate = resEvent.startDate.toString().slice(4,24);
+  resEvent.endDate = resEvent.endDate.toString().slice(4,24);
   delete resEvent.createdAt;
   delete resEvent.updatedAt;
   resEvent.numAttending = await Attendance.count({
@@ -499,8 +506,8 @@ router.put('/:eventId', requireAuth, async (req,res,next) => {
     capacity: event.capacity,
     price: event.price,
     description: event.description,
-    startDate: event.startDate,
-    endDate: event.endDate
+    startDate: event.startDate.toString().slice(4,24),
+    endDate: event.endDate.toString().slice(4,24)
   }
 
   res.json(

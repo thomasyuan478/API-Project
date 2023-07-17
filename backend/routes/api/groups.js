@@ -304,7 +304,7 @@ router.get('/:id', async (req,res,next) => {
   }
   const resGroup = group.toJSON();
 
-  resGroup.startDate = resGroup.createdAt.toString().slice(4,24);
+  resGroup.createdAt = resGroup.createdAt.toString().slice(4,24);
   resGroup.updatedAt = resGroup.updatedAt.toString().slice(4,24);
 
   resGroup.GroupImages.forEach(image => {

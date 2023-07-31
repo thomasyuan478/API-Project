@@ -63,7 +63,7 @@ const validateSignup = [
   async(req,res,next) => {
     const { email, firstName, lastName, username, password } = req.body;
 
-    if(!email || !firstName || !lastName || !email.includes('@') || !username || !password){
+    if(!email || !firstName || !lastName || !email.includes('@') || !username || !password || username.length<4){
       const err = new Error('Bad Request');
       err.status = 400;
       err.errors = {};
@@ -72,6 +72,7 @@ const validateSignup = [
       if(!firstName) err.errors.firstName = "First Name is required";
       if(!lastName) err.errors.lastName = "Last Name is required";
       if(!username) err.errors.username = "Username is required";
+      if(username.length<4) err.errors.username = "Username must be 4 characters or more"
       if(!password) err.errors.password = "password is required";
       return next(err);
     }

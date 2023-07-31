@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import LandingPage from './components/LandingPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -15,6 +16,17 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Switch></Switch>}
+      <Switch>
+        <Route exact path='/'>
+          <LandingPage />
+        </Route>
+        <Route path='/groups'>
+          <h1>Groups Page</h1>
+        </Route>
+        <Route path='/events'>
+          <h1>Events Page</h1>
+        </Route>
+      </Switch>
     </>
   );
 }

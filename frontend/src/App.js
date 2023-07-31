@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import LandingPage from './components/LandingPage';
 import GroupPage from "./components/GroupsPage";
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);

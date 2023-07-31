@@ -1,0 +1,82 @@
+.base{
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.mainimg{
+  width: 400px;
+}
+
+.title{
+  font-size: 40px;
+}
+
+.banner{
+  display: flex;
+  flex-direction: row;
+}
+
+.banner-text{
+  margin-right: 3em;
+}
+
+.description-container{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.description-content{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 300px;
+  margin: 0;
+}
+
+.highlightimg{
+  height:120px;
+  width: auto;
+}
+
+.card-container{
+  width:auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.cards{
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  margin-right: 30px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.card-link{
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  font-size: large;
+  font-weight: bold;
+}
+
+.card-description{
+  margin-top: 0;
+}
+
+.join-button{
+  background-color: teal;
+  color: white;
+  padding: 9px;
+}
+
+.button-container{
+  display: flex;
+  justify-content: center;
+}

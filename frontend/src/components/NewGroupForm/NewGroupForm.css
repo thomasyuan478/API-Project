@@ -1,3 +1,14 @@
 .el-container{
   border-bottom: 1px gray solid;
 }
+
+.errors{
+  color: red;
+}
+
+.createGroup{
+  margin-top: 10px;
+  padding: 10px;
+  background-color: red;
+  color: white;
+}

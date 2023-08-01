@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from './components/LandingPage';
 import GroupPage from "./components/GroupsPage";
+import GroupDetail from "./components/GroupDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function App() {
           <h1>Events Page</h1>
         </Route>
         <Route path='/groups/:groupId'>
-          Coming Soon!
+          <GroupDetail />
         </Route>
       </Switch>
     </>

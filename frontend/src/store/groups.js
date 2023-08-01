@@ -52,12 +52,13 @@ export const getGroups = () => async dispatch => {
   }
 };
 
-export const getGroupDetail = (group) => async dispatch => {
-  const response = await fetch(`./api/groups/${group.id}`)
+export const getGroupDetail = (groupId) => async dispatch => {
+  console.log("FROM GETGROUPDETAIL THUNK", groupId);
+  const response = await fetch(`/api/groups/${groupId}`)
 
   if(response.ok){
     const group = await response.json();
-    dispatch(getGroupDetail(group));
+    dispatch(groupDetail(group));
     console.log('getGroupsDetail from thunk', group);
   }
 }

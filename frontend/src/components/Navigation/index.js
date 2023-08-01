@@ -17,6 +17,9 @@ function Navigation({ isLoaded }){
           <ProfileButton user={sessionUser} />
         </li>
       )}
+      <li>
+        <NavLink to='/groups/new'>Start a group</NavLink>
+      </li>
     </ul>
   );
 }

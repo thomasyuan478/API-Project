@@ -21,11 +21,14 @@ function App() {
         <Route exact path='/'>
           <LandingPage />
         </Route>
-        <Route path='/groups'>
+        <Route exact path='/groups'>
           <GroupPage />
         </Route>
-        <Route path='/events'>
+        <Route exact path='/events'>
           <h1>Events Page</h1>
+        </Route>
+        <Route path='/groups/:groupId'>
+          Coming Soon!
         </Route>
       </Switch>
     </>

@@ -19,3 +19,10 @@
   margin-top: 10px;
   margin-right: 63px;
 }
+
+.slide-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-left: 300px;
+}

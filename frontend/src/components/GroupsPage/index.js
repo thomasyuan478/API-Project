@@ -14,7 +14,10 @@ const GroupPage = () => {
   },[dispatch]);
 
   console.log("Console Log on GroupsList", groupList.allGroups)
-  console.log(Object.keys(groupList.allGroups))
+  console.log(Object.keys(groupList.allGroups));
+
+  const keys = Object.keys(groupList.allGroups)
+  const groups = groupList.allGroups;
 
   return(
     <>
@@ -25,7 +28,9 @@ const GroupPage = () => {
       </div>
       <p className='headers-content'>Groups in MeetUp</p>
     </div>
-    <GroupCard />
+    <div className='slide-container'>
+      {keys.map(key => <GroupCard obj={groups[key]} />)}
+    </div>
     </>
   )
 }

@@ -22,7 +22,8 @@ router.get('/', async (req, res) => {
   const groups = await Group.findAll({
     include: [
       {model: Membership},
-      {model: GroupImage}
+      {model: GroupImage},
+      {model: Event}
   ]
   });
 
@@ -32,7 +33,7 @@ router.get('/', async (req, res) => {
   groupsList.forEach(group => {
 
     group.numMembers = group.Memberships.length;
-
+    group.numEvents = group.Events.length;
 
     group.createdAt = group.createdAt.toString().slice(4,24);
     group.updatedAt = group.updatedAt.toString().slice(4,24);
@@ -47,6 +48,7 @@ router.get('/', async (req, res) => {
 
     delete group.Memberships
     delete group.GroupImages
+    delete group.Events
   })
 
   res.json({Groups: groupsList});

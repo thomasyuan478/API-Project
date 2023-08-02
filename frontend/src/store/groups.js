@@ -29,10 +29,11 @@ export function createGroup(group) {
   };
 }
 
-export function updateGroup(group) {
+export function updateGroup(group, groupId) {
   return {
     type: UPDATE_GROUP,
     group,
+    groupId,
   };
 }
 
@@ -64,20 +65,30 @@ export const getGroupDetail = (groupId) => async (dispatch) => {
   }
 };
 
-//post thunk
+//update thunk
+export const updateGroupThunk = (group, groupId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${groupId}`, {
+    method: "PUT",
+    body: JSON.stringify(group),
+  });
 
+  if (response.ok) {
+    const resGroup = await response.json();
+    dispatch(updateGroup(resGroup, groupId));
+    return response;
+  }
+};
+
+//post thunk
 export const postGroup = (group) => async (dispatch) => {
   const response = await csrfFetch("/api/groups/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(group),
   });
-
-  if (response.ok) {
-    const createdGroup = await response.json();
-    dispatch(createGroup(createdGroup));
-    return createdGroup;
-  }
+  const createdGroup = await response.json();
+  dispatch(createGroup(createdGroup));
+  return createdGroup;
 };
 
 //delete thunk
@@ -117,7 +128,8 @@ const groupsReducer = (state = initialState, action) => {
       return newState;
     }
     case UPDATE_GROUP: {
-      const newState = { ...state };
+      const newState = { ...state, singleGroup: {} };
+      // newState.allGroups[action.groupId] = action.group;
       newState.singleGroup = action.group;
       return newState;
     }

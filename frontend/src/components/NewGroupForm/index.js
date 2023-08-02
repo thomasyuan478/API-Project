@@ -209,6 +209,7 @@ const NewGroupForm = () => {
           </div>
         </div>
         <button
+          type="submit"
           disabled={Object.values(validationErrors).length > 1}
           className="createGroup"
         >

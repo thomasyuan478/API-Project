@@ -1,3 +1,13 @@
 .hidden{
   display: none
 }
+
+.nav-container{
+  margin: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-func{
+  column-gap: 10px;
+}

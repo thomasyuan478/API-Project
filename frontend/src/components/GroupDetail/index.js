@@ -7,6 +7,8 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import "./GroupDetail.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteGroupThunk } from "../../store/groups";
+import OpenModalButton from "../OpenModalButton";
+import EditGroupModal from "../EditGroupModal";
 
 const GroupDetail = () => {
   const { groupId } = useParams();
@@ -36,8 +38,8 @@ const GroupDetail = () => {
     console.log("Hello from delete button");
 
     try {
-      dispatch(deleteGroupThunk(groupId));
-      setTimeout(() => history.push("/groups"), 1000);
+      dispatch(deleteGroupThunk(groupId)).then(history.push("/groups"));
+      // setTimeout(() => history.push("/groups"), 1000);
     } catch (errors) {
       throw new Error("Dispatch Error");
     }
@@ -70,6 +72,14 @@ const GroupDetail = () => {
             </p>
             {user && group.Organizer.id === user.id && (
               <button onClick={deleteButton}> Delete Group</button>
+            )}
+            {user && group.Organizer.id === user.id && (
+              <OpenModalButton
+                buttonText="Edit Group"
+                modalComponent={
+                  <EditGroupModal group={group} groupId={groupId} />
+                }
+              />
             )}
           </div>
           <button className="group-button">Join This Group</button>

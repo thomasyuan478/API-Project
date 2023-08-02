@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import LandingPage from './components/LandingPage';
+import LandingPage from "./components/LandingPage";
 import GroupPage from "./components/GroupsPage";
 import GroupDetail from "./components/GroupDetail";
 import NewGroupForm from "./components/NewGroupForm";
+import EventPage from "./components/EventsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,19 +21,19 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Switch></Switch>}
       <Switch>
-        <Route exact path='/'>
+        <Route exact path="/">
           <LandingPage />
         </Route>
-        <Route exact path='/groups'>
+        <Route exact path="/groups">
           <GroupPage />
         </Route>
-        <Route exact path='/groups/new'>
+        <Route exact path="/groups/new">
           <NewGroupForm />
         </Route>
-        <Route exact path='/events'>
-          <h1>Events Page</h1>
+        <Route exact path="/events">
+          <EventPage />
         </Route>
-        <Route path='/groups/:groupId'>
+        <Route path="/groups/:groupId">
           <GroupDetail />
         </Route>
       </Switch>

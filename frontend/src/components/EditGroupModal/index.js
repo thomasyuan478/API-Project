@@ -37,14 +37,13 @@ function EditGroupModal({ groupId, group }) {
 
     dispatch(updateGroupThunk(updateGroup, groupId))
       .then(closeModal)
+      .then(dispatch(getGroupDetail(groupId)))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
           setValidationErrors(data.errors);
         }
       });
-
-    dispatch(getGroupDetail(groupId));
   };
 
   return (

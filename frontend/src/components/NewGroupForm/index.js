@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import "./NewGroupForm.css";
+import { postGroup } from "../../store/groups";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const NewGroupForm = () => {
   const [city, setCity] = useState("");
@@ -10,6 +13,8 @@ const NewGroupForm = () => {
   const [type, setType] = useState("");
   const [isPrivate, setIsPrivate] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     const errors = {};
@@ -51,16 +56,19 @@ const NewGroupForm = () => {
       private: privateBoolean,
     };
 
-    // setCity("");
-    // setState("");
-    // setName("");
-    // setAbout("");
-    // setUrl("");
-    // setType("");
-    // setIsPrivate("");
+    //post thunk
+    dispatch(postGroup(createGroupRequest));
+
+    setCity("");
+    setState("");
+    setName("");
+    setAbout("");
+    setUrl("");
+    setType("");
+    setIsPrivate("");
     // Ideally, we'd persist this information to a database using a RESTful API.
     // For now, though, just log the contact us information to the console.
-    console.log(createGroupRequest);
+    history.push("/groups");
   };
 
   return (
@@ -190,7 +198,7 @@ const NewGroupForm = () => {
             <div>
               <input
                 id="url"
-                type="text"
+                type="url"
                 onChange={(e) => setUrl(e.target.value)}
                 value={url}
               />

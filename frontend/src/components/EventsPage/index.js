@@ -39,7 +39,11 @@ const EventPage = () => {
       </div>
       <div className="slide-container">
         {keys.map((key) => (
-          <EventCard key={events[key].id} obj={events[key]} />
+          <EventCard
+            key={events[key].id}
+            id={events[key].id}
+            obj={events[key]}
+          />
         ))}
       </div>
     </>

@@ -39,7 +39,6 @@ const GroupDetail = () => {
 
     try {
       dispatch(deleteGroupThunk(groupId)).then(history.push("/groups"));
-      // setTimeout(() => history.push("/groups"), 1000);
     } catch (errors) {
       throw new Error("Dispatch Error");
     }
@@ -89,7 +88,9 @@ const GroupDetail = () => {
               </button>
             )}
           </div>
-          <button className="group-button">Join This Group</button>
+          {user && group.Organizer.id !== user.id && (
+            <button className="group-button">Join This Group</button>
+          )}
         </div>
       </div>
       <div className="gd-body">

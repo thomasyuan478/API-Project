@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteEventThunk } from "../../store/event";
 import OpenModalButton from "../OpenModalButton";
 import EditGroupModal from "../EditGroupModal";
+import { getGroupDetail, getGroups } from "../../store/groups";
 
 const EventDetail = () => {
   const { eventId } = useParams();
@@ -18,6 +19,7 @@ const EventDetail = () => {
   const history = useHistory();
   const state = useSelector((state) => state.events);
   const user = useSelector((state) => state.session.user);
+  const group = useSelector((state) => state.groups.singleGroup);
   // const event = useSelector((state) => state.events.SingleEvent);
   // const images = useSelector((state) => state.events.SingleEvent.EventImages);
 
@@ -28,25 +30,25 @@ const EventDetail = () => {
   // console.log("Events page", state);
 
   if (!state.singleEvent) return null;
+  if (!user) return null;
 
   const event = state.singleEvent;
   const images = event.EventImages;
 
-  console.log(images);
+  // console.log(groups);
+  // console.log("THE THING", groups[event.Group.id]);
 
   const displayImg =
     "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg";
 
   console.log("states", event);
+  // console.log("Test Case", user.id, event.Group.organizerId);
 
   const deleteButton = (e) => {
     e.preventDefault();
 
-    console.log("Hello from delete button");
-
     try {
       dispatch(deleteEventThunk(eventId)).then(history.push("/events"));
-      // setTimeout(() => history.push("/groups"), 1000);
     } catch (errors) {
       throw new Error("Dispatch Error");
     }
@@ -96,6 +98,9 @@ const EventDetail = () => {
                 />
               )} */}
             </div>
+            {event.Group && user.id === event.Group.organizerId && (
+              <button onClick={deleteButton}>Delete Event</button>
+            )}
             <div className="e-det">
               <div>
                 <p>Start: {event.startDate + " AM"}</p>

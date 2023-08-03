@@ -65,11 +65,8 @@ export const deleteEventThunk = (eventId) => async (dispatch) => {
   const response = await csrfFetch(`/api/events/${eventId}`, {
     method: "DELETE",
   });
-
-  if (response.ok) {
-    dispatch(deleteEvent(eventId));
-    return response;
-  }
+  dispatch(deleteEvent(eventId));
+  return response;
 };
 
 const initialState = { Events: {}, singleEvent: {} };
@@ -93,10 +90,10 @@ const eventsReducer = (state = initialState, action) => {
       return newState;
     }
     case DELETE_EVENT: {
-      const newState = { ...state };
-      // newState.allGroups[action.groupId] = {};
-      // newState.singleGroup = {};
-      // return newState;
+      const newState = { ...state, singleEvent: {} };
+      newState.Events[action.eventId] = {};
+      newState.singleEvent = {};
+      return newState;
     }
     default:
       return state;

@@ -6,7 +6,7 @@ import { getGroups } from "../../store/groups";
 import { Navigate } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-const GroupCard = ({ obj, key, id }) => {
+const GroupCard = ({ obj, id }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 

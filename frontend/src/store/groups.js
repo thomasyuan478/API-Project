@@ -93,8 +93,6 @@ export const postGroup = (group) => async (dispatch) => {
 
 //delete thunk
 export const deleteGroupThunk = (groupId) => async (dispatch) => {
-  console.log("Hello from inside the thunk", groupId);
-  // console.log(typeof groupId);
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "DELETE",
   });

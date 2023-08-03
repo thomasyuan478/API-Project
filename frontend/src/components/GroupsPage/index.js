@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroups } from "../../store/groups";
 import GroupCard from "../GroupCard";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const GroupPage = () => {
   const dispatch = useDispatch();
   const groupList = useSelector((state) => state.groups);
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getGroups());
@@ -19,12 +21,18 @@ const GroupPage = () => {
   const keys = Object.keys(groupList.allGroups);
   const groups = groupList.allGroups;
 
+  const redirect = (e) => {
+    history.push("/events");
+  };
+
   return (
     <>
       <div className="headers-container">
         <div className="headers">
-          <h2 className="headers-title">Events</h2>
-          <h2 className="headers-title">Groups</h2>
+          <h2 onClick={redirect} className="headers-title inactive">
+            Events
+          </h2>
+          <h2 className="headers-title active-page">Groups</h2>
         </div>
         <p className="headers-content">Groups in MeetUp</p>
       </div>

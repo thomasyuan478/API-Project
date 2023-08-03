@@ -6,7 +6,7 @@ import { getGroups } from "../../store/groups";
 import { Navigate } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-const GroupCard = ({ obj }) => {
+const EventCard = ({ obj }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -14,23 +14,23 @@ const GroupCard = ({ obj }) => {
     history.push(`/events/${obj.id}`);
   };
 
+  console.log("Event Card OBJ", obj);
+
   return (
     <>
       <div className="slide">
         <img className="slide-img" src={obj.previewImage}></img>
         <div onClick={onClick}>
+          <div>{obj.startDate}</div>
           <h3>{obj.name}</h3>
           <span>
-            {obj.city}, {obj.state}
+            {obj.Venue.city}, {obj.Venue.state}
           </span>
           <p>{obj.about}</p>
-          <div>
-            {obj.numEvents} Events * {obj.private ? "Private" : "Public"}
-          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default GroupCard;
+export default EventCard;

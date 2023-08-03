@@ -6,8 +6,25 @@
   margin: 25px 30px;
   display: flex;
   justify-content: space-between;
+  border-bottom: gray 1px solid;
+  padding-bottom: 30px;
 }
 
-.nav-func{
-  column-gap: 10px;
+.profile-dropdown{
+  position: absolute;
+  right: 50px;
+  background-color: rgb(185, 185, 185);
+  list-style: none;
+  padding: 10px;
+}
+
+.profile-dropdown > li {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-dropdown > li > button {
+
 }

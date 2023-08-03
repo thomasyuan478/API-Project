@@ -94,14 +94,12 @@ export const postGroup = (group) => async (dispatch) => {
 //delete thunk
 export const deleteGroupThunk = (groupId) => async (dispatch) => {
   console.log("Hello from inside the thunk", groupId);
-  console.log(typeof groupId);
+  // console.log(typeof groupId);
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "DELETE",
   });
-
-  if (response.ok) {
-    dispatch(deleteGroup(groupId));
-  }
+  dispatch(deleteGroup(groupId));
+  return response;
 };
 
 const initialState = {
@@ -134,7 +132,7 @@ const groupsReducer = (state = initialState, action) => {
       return newState;
     }
     case DELETE_GROUP: {
-      const newState = { ...state };
+      const newState = { ...state, singleGroup: {} };
       newState.allGroups[action.groupId] = {};
       newState.singleGroup = {};
       return newState;

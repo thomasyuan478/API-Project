@@ -18,12 +18,16 @@ const EventDetail = () => {
   const history = useHistory();
   const state = useSelector((state) => state.events);
   const user = useSelector((state) => state.session.user);
+  // const event = useSelector((state) => state.events.SingleEvent);
+  // const images = useSelector((state) => state.events.SingleEvent.EventImages);
 
   useEffect(() => {
     dispatch(getEventDetail(eventId));
   }, [dispatch]);
 
   // console.log("Events page", state);
+
+  if (!state.singleEvent) return null;
 
   const event = state.singleEvent;
   const images = event.EventImages;
@@ -48,7 +52,10 @@ const EventDetail = () => {
     }
   };
 
-  // if (!group.Organizer) return null;
+  const redirectButton = (e) => {
+    console.log("BUTTON HAS FIRED");
+    history.push(`/groups/${event.Group.id}`);
+  };
 
   return (
     <>
@@ -67,8 +74,16 @@ const EventDetail = () => {
           ></img>
           <div className="header-content-container">
             <div className="header-content">
-              <p>{event.Group.name}</p>
-              <p>{event.Group.private === true ? "Private" : "Public"}</p>
+              {event.Group && (
+                <div onClick={redirectButton}>
+                  <p>{event.Group.name}</p>
+                  <p>{event.Group.private === true ? "Private" : "Public"}</p>
+                </div>
+              )}
+              {/* {event.Group && <p>{event.Group.name}</p>}
+              {event.Group && (
+                <p>{event.Group.private === true ? "Private" : "Public"}</p>
+              )} */}
               {/* {user && group.Organizer.id === user.id && (
                 <button onClick={deleteButton}> Delete Group</button>
               )} */}

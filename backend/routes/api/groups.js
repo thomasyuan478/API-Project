@@ -528,6 +528,7 @@ router.post("/:groupId/events", requireAuth, async (req, res, next) => {
     description,
     startDate,
     endDate,
+    url,
   } = req.body;
 
   const venue = await Venue.findByPk(venueId);
@@ -623,6 +624,13 @@ router.post("/:groupId/events", requireAuth, async (req, res, next) => {
       price,
       startDate,
       endDate,
+    });
+
+    const newImage = await EventImage.create({
+      userId: req.user.id,
+      eventId: newEvent.id,
+      url,
+      preview: true,
     });
 
     const resEvent = {

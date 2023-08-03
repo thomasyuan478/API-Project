@@ -16,7 +16,7 @@ const EventPage = () => {
     dispatch(getEvents());
   }, [dispatch]);
 
-  console.log("Console Log on GroupsList", eventsList.Events);
+  console.log("Console Log on EventsPage", eventsList.Events);
   console.log(Object.keys(eventsList.Events));
 
   const keys = Object.keys(eventsList.Events);

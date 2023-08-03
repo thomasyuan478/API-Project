@@ -38,7 +38,11 @@ const GroupPage = () => {
       </div>
       <div className="slide-container">
         {keys.map((key) => (
-          <GroupCard key={groups[key].id} obj={groups[key]} />
+          <GroupCard
+            key={groups[key].id}
+            id={groups[key].id}
+            obj={groups[key]}
+          />
         ))}
       </div>
     </>

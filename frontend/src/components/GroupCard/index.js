@@ -6,26 +6,31 @@ import { getGroups } from "../../store/groups";
 import { Navigate } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-const GroupCard = ({ obj }) => {
+const GroupCard = ({ obj, key, id }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const state = useSelector((state) => state.groups.allGroups[id]);
+  console.log("State", state, id);
 
   const onClick = () => {
     history.push(`/groups/${obj.id}`);
   };
 
+  if (!state) return null;
+
   return (
     <>
       <div className="slide">
-        <img className="slide-img" src={obj.previewImage}></img>
+        <img className="slide-img" src={state.previewImage}></img>
         <div onClick={onClick}>
-          <h3>{obj.name}</h3>
+          <h3>{state.name}</h3>
           <span>
-            {obj.city}, {obj.state}
+            {state.city}, {state.state}
           </span>
-          <p>{obj.about}</p>
+          <p>{state.about}</p>
           <div>
-            {obj.numEvents} Events * {obj.private ? "Private" : "Public"}
+            {state.numEvents} Events * {state.private ? "Private" : "Public"}
           </div>
         </div>
       </div>

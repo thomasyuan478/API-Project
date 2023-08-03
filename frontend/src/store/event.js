@@ -50,15 +50,15 @@ export const getEventDetail = (eventId) => async (dispatch) => {
   return response;
 };
 
-export const postEvent = (event) => async (dispatch) => {
-  const response = await csrfFetch("/api/events/", {
+export const postEvent = (event, groupId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${groupId}/events/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(event),
   });
   const createdEvent = await response.json();
   dispatch(createEvent(createdEvent));
-  return createEvent;
+  return response;
 };
 
 export const deleteEventThunk = (eventId) => async (dispatch) => {
@@ -83,13 +83,13 @@ const eventsReducer = (state = initialState, action) => {
       return newState;
     }
     case EVENT_DETAIL: {
-      let newState = { ...state };
+      let newState = { ...state, singleEvent: {} };
       newState.singleEvent = action.event;
       return newState;
     }
     case CREATE_EVENT: {
       const newState = { ...state };
-      // newState.singleGroup = action.group;
+      newState.singleEvent = action.group;
       return newState;
     }
     case DELETE_EVENT: {

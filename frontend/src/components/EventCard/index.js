@@ -23,9 +23,11 @@ const EventCard = ({ obj }) => {
         <div onClick={onClick}>
           <div>{obj.startDate}</div>
           <h3>{obj.name}</h3>
-          <span>
-            {obj.Venue.city}, {obj.Venue.state}
-          </span>
+          {obj.Venue && (
+            <span>
+              {obj.Venue.city}, {obj.Venue.state}
+            </span>
+          )}
           <p>{obj.about}</p>
         </div>
       </div>

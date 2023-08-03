@@ -81,6 +81,13 @@ const GroupDetail = () => {
                 }
               />
             )}
+            {user && group.Organizer.id === user.id && (
+              <button
+                onClick={(e) => history.push(`/groups/${groupId}/events/new`)}
+              >
+                Create Event
+              </button>
+            )}
           </div>
           <button className="group-button">Join This Group</button>
         </div>

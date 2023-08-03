@@ -50,6 +50,18 @@ function EditGroupModal({ groupId, group }) {
     <>
       <h1>Edit Group</h1>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Name:</label>
+        <div>
+          <input
+            id="name"
+            type="text"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+          />
+          {validationErrors.name && (
+            <p className="errors">{validationErrors.name}</p>
+          )}
+        </div>
         <label htmlFor="city">City:</label>
         <div>
           <input
@@ -75,18 +87,7 @@ function EditGroupModal({ groupId, group }) {
             <p className="errors">{validationErrors.state}</p>
           )}
         </div>
-        <label htmlFor="name">Name:</label>
-        <div>
-          <input
-            id="name"
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
-          {validationErrors.name && (
-            <p className="errors">{validationErrors.name}</p>
-          )}
-        </div>
+
         <label htmlFor="about">About:</label>
         <div>
           <textarea
@@ -134,7 +135,7 @@ function EditGroupModal({ groupId, group }) {
             <p className="errors">{validationErrors.isPrivate}</p>
           )}
         </div>
-        <label htmlFor="url">
+        {/* <label htmlFor="url">
           Please add in an image url for your group below:
         </label>
         <div>
@@ -147,7 +148,7 @@ function EditGroupModal({ groupId, group }) {
           {validationErrors.url && (
             <p className="errors">{validationErrors.url}</p>
           )}
-        </div>
+        </div> */}
 
         {errors.credential && <p>{errors.credential}</p>}
         <button

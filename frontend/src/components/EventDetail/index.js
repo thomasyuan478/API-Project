@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import { useDispatch, use } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-
+import ConfirmationModal from "../ConfirmationModal";
 import { getEventDetail } from "../../store/event";
+import OpenModalButton from "../OpenModalButton";
 
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -103,7 +104,10 @@ const EventDetail = () => {
               )} */}
             </div>
             {event.Group && check && (
-              <button onClick={deleteButton}>Delete Event</button>
+              <OpenModalButton
+                buttonText="Delete Event"
+                modalComponent={<ConfirmationModal eventId={eventId} />}
+              />
             )}
             <div className="e-det">
               <div>

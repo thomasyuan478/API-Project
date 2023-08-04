@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import "./GroupDetail.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteGroupThunk } from "../../store/groups";
+import ConfirmationModal from "../ConfirmationModal";
 import OpenModalButton from "../OpenModalButton";
 import EditGroupModal from "../EditGroupModal";
 import EventCard from "../EventCard";
@@ -92,7 +93,10 @@ const GroupDetail = () => {
               {group.Organizer.lastName}
             </p>
             {user && group.Organizer.id === user.id && (
-              <button onClick={deleteButton}> Delete Group</button>
+              <OpenModalButton
+                buttonText="Delete Group"
+                modalComponent={<ConfirmationModal groupId={groupId} />}
+              />
             )}
             {user && group.Organizer.id === user.id && (
               <OpenModalButton

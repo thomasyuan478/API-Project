@@ -5,8 +5,10 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "./ProfileButton.css";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function ProfileButton({ user }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -37,6 +39,11 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
+  const redirect = (e) => {
+    history.push("/groups");
+    setShowMenu(false);
+  };
+
   return (
     <>
       <button className="userbutton" onClick={openMenu}>
@@ -50,6 +57,9 @@ function ProfileButton({ user }) {
               {user.firstName} {user.lastName}
             </li>
             <li>{user.email}</li>
+            <li>
+              <button onClick={redirect}>View Groups</button>
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>

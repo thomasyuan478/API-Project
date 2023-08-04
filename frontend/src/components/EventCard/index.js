@@ -25,13 +25,13 @@ const EventCard = ({ id }) => {
 
   return (
     <>
-      <div>
+      <div className="ec-oc">
         <div className="slide">
           <img className="slide-img" src={eventState.previewImage}></img>
-          <div onClick={onClick}>
+          <div className="ec-cc" onClick={onClick}>
             <div>
               {eventState.startDate}
-              <h3>{eventState.name}</h3>
+              <h3 className="ec-ti">{eventState.name}</h3>
             </div>
             {eventState.Venue && (
               <span>
@@ -41,7 +41,7 @@ const EventCard = ({ id }) => {
             {!eventState.Venue && <span>Online</span>}
           </div>
         </div>
-        <p>{eventState.description}</p>
+        <p className="ec-cd">{eventState.description}</p>
       </div>
     </>
   );

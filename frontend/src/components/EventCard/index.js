@@ -5,12 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGroups } from "../../store/groups";
 import { Navigate } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { getEventDetail, getEvents } from "../../store/event";
 
 const EventCard = ({ id }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const eventState = useSelector((state) => state.events.Events[id]);
+
+  useEffect(() => {
+    dispatch(getEvents());
+  }, [dispatch]);
 
   const onClick = () => {
     history.push(`/events/${eventState.id}`);

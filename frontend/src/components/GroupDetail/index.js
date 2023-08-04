@@ -2,13 +2,14 @@ import { useParams } from "react-router-dom";
 import { useDispatch, use } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getGroupDetail } from "../../store/groups";
+import { getGroupDetail, loadAssociatedEvents } from "../../store/groups";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import "./GroupDetail.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteGroupThunk } from "../../store/groups";
 import OpenModalButton from "../OpenModalButton";
 import EditGroupModal from "../EditGroupModal";
+import EventCard from "../EventCard";
 
 const GroupDetail = () => {
   const { groupId } = useParams();
@@ -21,6 +22,9 @@ const GroupDetail = () => {
     dispatch(getGroupDetail(groupId));
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   dispatch(loadAssociatedEvents(groupId));
+  // }, [dispatch]);
   // console.log("state", state.singleGroup);
   // console.log("groupId from GroupDetail", groupId);
 
@@ -31,6 +35,24 @@ const GroupDetail = () => {
     "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg";
 
   // console.log("images object", images);
+
+  const associatedEvents = group.associatedEvents;
+  console.log("associated events", associatedEvents);
+  let events;
+  let futureEvents = [];
+  let pastEvents = [];
+  if (associatedEvents) {
+    events = Object.keys(associatedEvents);
+    console.log("events, inside conditional", events);
+    events.map((event) => {
+      const currentDate = new Date();
+      const eventDate = new Date(associatedEvents[event].startDate);
+      if (eventDate > currentDate) futureEvents.push(event);
+      if (eventDate < currentDate) pastEvents.push(associatedEvents[event]);
+    });
+  }
+  console.log("futureEvents", futureEvents);
+  console.log("Pastevents", pastEvents);
 
   const deleteButton = (e) => {
     e.preventDefault();
@@ -102,18 +124,35 @@ const GroupDetail = () => {
           <h3 className="gd-about">What We're About</h3>
           <p className="gd-about-info">{group.about}</p>
         </div>
-        <div>
-          <h3>Upcoming Events</h3>
-          <h4>{"<Event Cards>"}</h4>
-          <h4>{"<Event Cards>"}</h4>
-          <h4>{"<Event Cards>"}</h4>
-        </div>
-        <div>
-          <h3>Past Events</h3>
-          <h4>{"<Event Cards>"}</h4>
-          <h4>{"<Event Cards>"}</h4>
-          <h4>{"<Event Cards>"}</h4>
-        </div>
+        {futureEvents.length > 0 && (
+          <div>
+            <h3>Upcoming Events</h3>
+            <h4>
+              {futureEvents.forEach((key) => (
+                <EventCard id={associatedEvents[key].id} />
+              ))}
+            </h4>
+          </div>
+        )}
+
+        {futureEvents.map((key) => (
+          <EventCard id={associatedEvents[key].id} />
+        ))}
+
+        {/* {pastEvents.map((event) => (
+          <EventCard key={event.id} id={event.id} />
+        ))} */}
+
+        {pastEvents.length > 0 && (
+          <div>
+            <h3>Past Events</h3>
+            <h4>
+              {pastEvents.map((event) => (
+                <EventCard key={event.id} id={event.id} />
+              ))}
+            </h4>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ const GET_GROUPS = "GET /api/groups";
 const GROUP_DETAIL = "GET /api/group/:groupId";
 const UPDATE_GROUP = "PUT /api/group/:groupId";
 const DELETE_GROUP = "DELETE /api/group/:groupId";
+const LOAD_EVENTS = "GET /api/groups/:groupId/events";
 
 //Action Creator
 export function loadGroups(groups) {
@@ -21,6 +22,13 @@ export function groupDetail(group) {
     group,
   };
 }
+
+// export function loadAssociatedEvents(associatedEvents) {
+//   return {
+//     type: LOAD_EVENTS,
+//     associatedEvents,
+//   };
+// }
 
 export function createGroup(group) {
   return {
@@ -57,13 +65,28 @@ export const getGroups = () => async (dispatch) => {
 
 export const getGroupDetail = (groupId) => async (dispatch) => {
   const response = await fetch(`/api/groups/${groupId}`);
-
+  const response2 = await fetch(`/api/groups/${groupId}/events`);
   if (response.ok) {
     const group = await response.json();
+    const associatedEvents = await response2.json();
+    const events = associatedEvents.Events;
+    group.associatedEvents = {};
+    events.forEach((event) => (group.associatedEvents[event.id] = event));
+    // events.forEach((event) => (group.associatedEvents[event.id] = event));
+    // group.associatedEvents = associatedEvents.Events;
     dispatch(groupDetail(group));
-    console.log("getGroupsDetail from thunk", group);
+    console.log("getGroupsDetail from thunk", group, associatedEvents);
   }
 };
+
+//get associated events thunk
+// export const getAssociatedEvents = (groupId) => async (dispatch) => {
+//   const response = await fetch(`/api/groups/${groupId}/events`);
+//   const associatedEvents = await response.json();
+//   console.log("From Associated Events", associatedEvents);
+//   dispatch(loadAssociatedEvents(associatedEvents));
+//   return response;
+// };
 
 //update thunk
 export const updateGroupThunk = (group, groupId) => async (dispatch) => {
@@ -116,6 +139,11 @@ const groupsReducer = (state = initialState, action) => {
     case GROUP_DETAIL: {
       let newState = { ...state, singleGroup: {} };
       newState.singleGroup = action.group;
+      return newState;
+    }
+    case LOAD_EVENTS: {
+      let newState = { ...state };
+      newState.singleGroup.associatedEvents = action.payload;
       return newState;
     }
     case CREATE_GROUP: {

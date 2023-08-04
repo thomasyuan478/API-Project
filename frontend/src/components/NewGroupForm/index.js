@@ -16,21 +16,21 @@ const NewGroupForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect(() => {
-    const errors = {};
-    if (!name) errors["name"] = "Name is required";
-    if (!city) errors["city"] = "City is required";
-    if (!state) errors["state"] = "State is required";
-    if (about.length < 50)
-      errors["about"] = "Description must be at least 50 characters long";
-    if (!type) errors["type"] = "Group Type is required";
-    if (!isPrivate) errors["isPrivate"] = "Visibility Type is required";
-    if (
-      !(url.includes(".png") || url.includes(".jpg") || url.includes(".jpeg"))
-    )
-      errors["url"] = "Image URL must end in .png, .jpg, or .jpeg";
-    setValidationErrors(errors);
-  }, [name, city, state, about, type, isPrivate, url]);
+  // useEffect(() => {
+  //   const errors = {};
+  //   if (!name) errors["name"] = "Name is required";
+  //   if (!city) errors["city"] = "City is required";
+  //   if (!state) errors["state"] = "State is required";
+  //   if (about.length < 50)
+  //     errors["about"] = "Description must be at least 50 characters long";
+  //   if (!type) errors["type"] = "Group Type is required";
+  //   if (!isPrivate) errors["isPrivate"] = "Visibility Type is required";
+  //   if (
+  //     !(url.includes(".png") || url.includes(".jpg") || url.includes(".jpeg"))
+  //   )
+  //     errors["url"] = "Image URL must end in .png, .jpg, or .jpeg";
+  //   setValidationErrors(errors);
+  // }, [name, city, state, about, type, isPrivate, url]);
 
   const onSubmit = (e) => {
     // Prevent the default form behavior so the page doesn't reload.
@@ -57,18 +57,26 @@ const NewGroupForm = () => {
     };
 
     //post thunk
-    dispatch(postGroup(createGroupRequest));
+    dispatch(postGroup(createGroupRequest))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setValidationErrors(data.errors);
+        }
+      })
+      .then((res) => {
+        if (res) history.push(`/groups/${res.id}`);
+      });
 
-    setCity("");
-    setState("");
-    setName("");
-    setAbout("");
-    setUrl("");
-    setType("");
-    setIsPrivate("");
+    // setCity("");
+    // setState("");
+    // setName("");
+    // setAbout("");
+    // setUrl("");
+    // setType("");
+    // setIsPrivate("");
     // Ideally, we'd persist this information to a database using a RESTful API.
     // For now, though, just log the contact us information to the console.
-    history.push("/groups");
   };
 
   return (
@@ -94,6 +102,7 @@ const NewGroupForm = () => {
               type="text"
               onChange={(e) => setCity(e.target.value)}
               value={city}
+              required
             />
             {validationErrors.city && (
               <p className="errors">{validationErrors.city}</p>
@@ -106,6 +115,7 @@ const NewGroupForm = () => {
               type="text"
               onChange={(e) => setState(e.target.value)}
               value={state}
+              required
             />
             {validationErrors.state && (
               <p className="errors">{validationErrors.state}</p>
@@ -125,6 +135,7 @@ const NewGroupForm = () => {
                 type="text"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
+                required
               />
               {validationErrors.name && (
                 <p className="errors">{validationErrors.name}</p>
@@ -149,9 +160,12 @@ const NewGroupForm = () => {
                 type="text"
                 onChange={(e) => setAbout(e.target.value)}
                 value={about}
+                required
               />
               {validationErrors.about && (
-                <p className="errors">{validationErrors.about}</p>
+                <p className="errors">
+                  {validationErrors.about}, Current Characters: {about.length}
+                </p>
               )}
             </div>
           </div>
@@ -163,6 +177,7 @@ const NewGroupForm = () => {
                 name="type"
                 onChange={(e) => setType(e.target.value)}
                 value={type}
+                required
               >
                 <option value="" disabled>
                   (select one)
@@ -180,6 +195,7 @@ const NewGroupForm = () => {
                 name="isPrivate"
                 onChange={(e) => setIsPrivate(e.target.value)}
                 value={isPrivate}
+                required
               >
                 <option value="" disabled>
                   (select one)
@@ -201,6 +217,7 @@ const NewGroupForm = () => {
                 type="url"
                 onChange={(e) => setUrl(e.target.value)}
                 value={url}
+                required
               />
               {validationErrors.url && (
                 <p className="errors">{validationErrors.url}</p>
@@ -210,7 +227,7 @@ const NewGroupForm = () => {
         </div>
         <button
           type="submit"
-          disabled={Object.values(validationErrors).length > 1}
+          // disabled={Object.values(validationErrors).length > 1}
           className="createGroup"
         >
           Create Group

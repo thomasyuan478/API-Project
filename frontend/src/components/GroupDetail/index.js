@@ -74,7 +74,7 @@ const GroupDetail = () => {
         {"< "}
         <NavLink to="/groups">Groups</NavLink>
       </span>
-      <div className="header-container">
+      <div className="gd-header-container">
         <img
           className="header-image"
           src={images && images[0].url}

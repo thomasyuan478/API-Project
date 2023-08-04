@@ -9,11 +9,13 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className="nav-container">
-      <NavLink exact to="/">
+      <NavLink className="Logo" exact to="/">
         PartyFinder
       </NavLink>
       <div className="nav-func">
-        <NavLink to="/groups/new">Start a group</NavLink>
+        <NavLink className="nav-group" to="/groups/new">
+          Start a Group
+        </NavLink>
         {isLoaded && <ProfileButton user={sessionUser} />}
       </div>
     </div>

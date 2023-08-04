@@ -68,7 +68,7 @@ const EventDetail = () => {
         </span>
         <h1>{event.name}</h1>
         <p>Hosted by FirstName LastName</p>
-        <div className="header-container">
+        <div className="ed-header-container">
           <img
             className="header-image"
             src={images && images[0].url}

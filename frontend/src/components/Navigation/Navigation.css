@@ -2,6 +2,19 @@
   display: none
 }
 
+.Logo{
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(255, 136, 0);
+  font-size: x-large;
+}
+
+.nav-group{
+  text-decoration: none;
+  font-weight: bold;
+  color: teal;
+}
+
 .nav-container{
   margin: 25px 30px;
   display: flex;

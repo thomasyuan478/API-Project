@@ -109,9 +109,12 @@ export const postGroup = (group) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(group),
   });
-  const createdGroup = await response.json();
-  dispatch(createGroup(createdGroup));
-  return createdGroup;
+  if (response.ok) {
+    const createdGroup = await response.json();
+    dispatch(createGroup(createdGroup));
+    console.log("Inside the post thuink", createdGroup);
+    return createdGroup;
+  } else return response;
 };
 
 //delete thunk

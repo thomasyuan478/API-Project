@@ -48,11 +48,14 @@ function EditGroupModal({ groupId, group }) {
 
   return (
     <>
-      <h1>Edit Group</h1>
+      <h1 className="eg-ti">Edit Group</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
+        <label className="eg-i" htmlFor="name">
+          Name:
+        </label>
         <div>
           <input
+            className="eg-i"
             id="name"
             type="text"
             onChange={(e) => setName(e.target.value)}
@@ -62,9 +65,12 @@ function EditGroupModal({ groupId, group }) {
             <p className="errors">{validationErrors.name}</p>
           )}
         </div>
-        <label htmlFor="city">City:</label>
+        <label className="eg-i" htmlFor="city">
+          City:
+        </label>
         <div>
           <input
+            className="eg-i"
             placeholder="please enter a city"
             id="city"
             type="text"
@@ -75,9 +81,12 @@ function EditGroupModal({ groupId, group }) {
             <p className="errors">{validationErrors.city}</p>
           )}
         </div>
-        <label htmlFor="state">State:</label>
+        <label className="eg-i" htmlFor="state">
+          State:
+        </label>
         <div>
           <input
+            className="eg-i"
             id="state"
             type="text"
             onChange={(e) => setState(e.target.value)}
@@ -88,9 +97,12 @@ function EditGroupModal({ groupId, group }) {
           )}
         </div>
 
-        <label htmlFor="about">About:</label>
+        <label className="eg-i" htmlFor="about">
+          About:
+        </label>
         <div>
           <textarea
+            className="eg-ta"
             id="about"
             type="text"
             onChange={(e) => setAbout(e.target.value)}
@@ -101,8 +113,9 @@ function EditGroupModal({ groupId, group }) {
           )}
         </div>
         <div>
-          <p>Is this group private or public?</p>
+          <p className="eg-i">Is this group private or public?</p>
           <select
+            className="eg-i"
             name="type"
             onChange={(e) => setType(e.target.value)}
             value={type}
@@ -119,8 +132,9 @@ function EditGroupModal({ groupId, group }) {
         </div>
 
         <div>
-          <p>Is this group private or public?</p>
+          <p className="eg-i">Is this group private or public?</p>
           <select
+            className="eg-i"
             name="isPrivate"
             onChange={(e) => setIsPrivate(e.target.value)}
             value={isPrivate}
@@ -135,11 +149,12 @@ function EditGroupModal({ groupId, group }) {
             <p className="errors">{validationErrors.isPrivate}</p>
           )}
         </div>
-        {/* <label htmlFor="url">
+        {/* <label className="eg-i" htmlFor="url">
           Please add in an image url for your group below:
         </label>
         <div>
           <input
+            className="eg-i"
             id="url"
             type="url"
             onChange={(e) => setUrl(e.target.value)}
@@ -151,12 +166,14 @@ function EditGroupModal({ groupId, group }) {
         </div> */}
 
         {errors.credential && <p>{errors.credential}</p>}
-        <button
-          disabled={Object.values(validationErrors).length > 1}
-          className="createGroup"
-        >
-          Update Group
-        </button>
+        <div className="eg-bc">
+          <button
+            disabled={Object.values(validationErrors).length > 1}
+            className="updateGroup"
+          >
+            Update Group
+          </button>
+        </div>
       </form>
     </>
   );

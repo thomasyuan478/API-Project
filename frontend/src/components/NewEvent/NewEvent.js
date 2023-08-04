@@ -7,6 +7,8 @@ import {
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getGroupDetail } from "../../store/groups";
 
 const NewEvent = () => {
   const [name, setName] = useState("");
@@ -32,6 +34,13 @@ const NewEvent = () => {
     if (new Date(endDate) <= new Date(startDate)) return true;
     else return false;
   };
+
+  const group = useSelector((state) => state.groups.singleGroup);
+  console.log("Hello from Event Form", group);
+
+  useEffect(() => {
+    if (!group) dispatch(getGroupDetail(groupId));
+  }, [dispatch]);
 
   // useEffect(() => {
   //   const errors = {};
@@ -88,134 +97,146 @@ const NewEvent = () => {
 
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <h1>Create an Event for GROUPNAME</h1>
-        <div>
-          <label htmlFor="name">What is the name of your event?</label>
+      <div className="ne-c">
+        <form onSubmit={onSubmit}>
+          <h1>Create an Event for {group.name}</h1>
+          <div className="ef-c">
+            <label htmlFor="name">What is the name of your event?</label>
+            <div>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                placeholder="Event Name"
+              />
+            </div>
+            {validationErrors.name && (
+              <p className="errors">{validationErrors.name}</p>
+            )}
+          </div>
           <div>
+            <label>is this an in person or an online group?</label>
+            <div className="ef-c2">
+              <select
+                className="ef-s"
+                name="type"
+                onChange={(e) => setType(e.target.value)}
+                value={type}
+                required
+              >
+                <option value="" disabled>
+                  (select one)
+                </option>
+                <option>Online</option>
+                <option>In person</option>
+              </select>
+            </div>
+            {validationErrors.type && (
+              <p className="errors">{validationErrors.type}</p>
+            )}
+          </div>
+          <div>
+            <label>Is this group private or public?</label>
+            <div className="ef-c2">
+              <select
+                className="ef-s"
+                name="isPrivate"
+                onChange={(e) => setIsPrivate(e.target.value)}
+                value={isPrivate}
+                required
+              >
+                <option value="" disabled>
+                  (select one)
+                </option>
+                <option>Private</option>
+                <option>Public</option>
+              </select>
+            </div>
+            {validationErrors.isPrivate && (
+              <p className="errors">{validationErrors.isPrivate}</p>
+            )}
+          </div>
+          <div>
+            <div className="ef-c">
+              <p className="ef-t">What is the price for your event?</p>
+              <label htmlFor="price">$ </label>
+              <input
+                className="ef-p"
+                type="text"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+                placeholder="0"
+              />
+            </div>
+          </div>
+          {validationErrors.price && (
+            <p className="errors">{validationErrors.price}</p>
+          )}
+          <div>
+            <label htmlFor="startDate">When does your event start?</label>
+            <div>
+              <input
+                className="ef-d"
+                type="datetime-local"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                required
+              />
+            </div>
+            {validationErrors.startDate && (
+              <p className="errors">{validationErrors.startDate}</p>
+            )}
+          </div>
+          <div>
+            <label htmlFor="endDate">When does your event end?</label>
+            <div className="ef-c">
+              <input
+                className="ef-d"
+                type="datetime-local"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                required
+              />
+            </div>
+            {validationErrors.endDate && (
+              <p className="errors">{validationErrors.endDate}</p>
+            )}
+          </div>
+          <label htmlFor="url">
+            Please add in an image url for your group below:
+          </label>
+          <div className="ef-c">
             <input
+              placeholder="Image URL"
+              id="url"
+              type="url"
+              onChange={(e) => setUrl(e.target.value)}
+              value={url}
+            />
+            {validationErrors.url && (
+              <p className="errors">{validationErrors.url}</p>
+            )}
+          </div>
+          <label htmlFor="description">Description:</label>
+          <div>
+            <textarea
+              placeholder="Please include atleast 30 characters."
+              id="description"
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
             />
+            {validationErrors.description && (
+              <p className="errors">{validationErrors.description}</p>
+            )}
           </div>
-          {validationErrors.name && (
-            <p className="errors">{validationErrors.name}</p>
-          )}
-        </div>
-        <div>
-          <label>is this an in person or an online group?</label>
-          <div>
-            <select
-              name="type"
-              onChange={(e) => setType(e.target.value)}
-              value={type}
-              required
-            >
-              <option value="" disabled>
-                (select one)
-              </option>
-              <option>Online</option>
-              <option>In person</option>
-            </select>
-          </div>
-          {validationErrors.type && (
-            <p className="errors">{validationErrors.type}</p>
-          )}
-        </div>
-        <div>
-          <label>Is this group private or public?</label>
-          <div>
-            <select
-              name="isPrivate"
-              onChange={(e) => setIsPrivate(e.target.value)}
-              value={isPrivate}
-              required
-            >
-              <option value="" disabled>
-                (select one)
-              </option>
-              <option>Private</option>
-              <option>Public</option>
-            </select>
-          </div>
-          {validationErrors.isPrivate && (
-            <p className="errors">{validationErrors.isPrivate}</p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="price">What is the price for your event?</label>
-          <div>
-            <input
-              type="text"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-        {validationErrors.price && (
-          <p className="errors">{validationErrors.price}</p>
-        )}
-        <div>
-          <label htmlFor="startDate">When does your event start?</label>
-          <div>
-            <input
-              type="datetime-local"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              required
-            />
-          </div>
-          {validationErrors.startDate && (
-            <p className="errors">{validationErrors.startDate}</p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="endDate">When does your event end?</label>
-          <div>
-            <input
-              type="datetime-local"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              required
-            />
-          </div>
-          {validationErrors.endDate && (
-            <p className="errors">{validationErrors.endDate}</p>
-          )}
-        </div>
-        <label htmlFor="url">
-          Please add in an image url for your group below:
-        </label>
-        <div>
-          <input
-            id="url"
-            type="url"
-            onChange={(e) => setUrl(e.target.value)}
-            value={url}
-          />
-          {validationErrors.url && (
-            <p className="errors">{validationErrors.url}</p>
-          )}
-        </div>
-        <label htmlFor="description">Description:</label>
-        <div>
-          <textarea
-            id="description"
-            type="text"
-            onChange={(e) => setDescription(e.target.value)}
-            value={description}
-          />
-          {validationErrors.description && (
-            <p className="errors">{validationErrors.description}</p>
-          )}
-        </div>
-        <button type="submit" className="createGroup">
-          Create Event
-        </button>
-      </form>
+          <button type="submit" className="createGroup">
+            Create Event
+          </button>
+        </form>
+      </div>
     </>
   );
 };

@@ -25,18 +25,23 @@ const EventCard = ({ id }) => {
 
   return (
     <>
-      <div className="slide">
-        <img className="slide-img" src={eventState.previewImage}></img>
-        <div onClick={onClick}>
-          <div>{eventState.startDate}</div>
-          <h3>{eventState.name}</h3>
-          {eventState.Venue && (
-            <span>
-              {eventState.Venue.city}, {eventState.Venue.state}
-            </span>
-          )}
-          <p>{eventState.about}</p>
+      <div>
+        <div className="slide">
+          <img className="slide-img" src={eventState.previewImage}></img>
+          <div onClick={onClick}>
+            <div>
+              {eventState.startDate}
+              <h3>{eventState.name}</h3>
+            </div>
+            {eventState.Venue && (
+              <span>
+                {eventState.Venue.city}, {eventState.Venue.state}
+              </span>
+            )}
+            {!eventState.Venue && <span>Online</span>}
+          </div>
         </div>
+        <p>{eventState.description}</p>
       </div>
     </>
   );

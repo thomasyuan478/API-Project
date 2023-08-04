@@ -17,6 +17,8 @@ const GroupDetail = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.groups);
   const user = useSelector((state) => state.session.user);
+  const group = useSelector((state) => state.groups.singleGroup);
+  // const images = useSelector((state) => state.groups.singleGroup.GroupImages);
   const history = useHistory();
 
   useEffect(() => {
@@ -29,15 +31,17 @@ const GroupDetail = () => {
   // console.log("state", state.singleGroup);
   // console.log("groupId from GroupDetail", groupId);
 
-  const group = state.singleGroup;
+  // const group = state.singleGroup;
   const images = group.GroupImages;
 
   const defaultImg =
     "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg";
 
   // console.log("images object", images);
-
-  const associatedEvents = group.associatedEvents;
+  const associatedEvents = useSelector(
+    (state) => state.groups.singleGroup.associatedEvents
+  );
+  // const associatedEvents = group.associatedEvents;
   console.log("associated events", associatedEvents);
   let events;
   let futureEvents = [];
@@ -84,21 +88,25 @@ const GroupDetail = () => {
         <div className="header-content-container">
           <div className="header-content">
             <h1>{group.name}</h1>
-            <p>
+            <p className="gd-d">
               {group.city}, {group.state}
             </p>
-            <p>## * {group.private ? "Private" : "Public"}</p>
-            <p>
+            <p className="gd-d">
+              {" "}
+              {events.length} Events * {group.private ? "Private" : "Public"}
+            </p>
+            <p className="gd-d">
               Organized by {group.Organizer.firstName}{" "}
               {group.Organizer.lastName}
             </p>
-            {user && group.Organizer.id === user.id && (
-              <OpenModalButton
-                buttonText="Delete Group"
-                modalComponent={<ConfirmationModal groupId={groupId} />}
-              />
-            )}
-            {user && group.Organizer.id === user.id && (
+            {/* {user && group.Organizer.id === user.id && (
+              <button
+                onClick={(e) => history.push(`/groups/${groupId}/events/new`)}
+              >
+                Create Event
+              </button>
+            )} */}
+            {/* {user && group.Organizer.id === user.id && (
               <OpenModalButton
                 buttonText="Edit Group"
                 modalComponent={
@@ -107,56 +115,76 @@ const GroupDetail = () => {
               />
             )}
             {user && group.Organizer.id === user.id && (
-              <button
-                onClick={(e) => history.push(`/groups/${groupId}/events/new`)}
-              >
-                Create Event
-              </button>
-            )}
+              <OpenModalButton
+                buttonText="Delete Group"
+                modalComponent={<ConfirmationModal groupId={groupId} />}
+              /> )}*/}
           </div>
           {user && group.Organizer.id !== user.id && (
             <button className="group-button">Join This Group</button>
           )}
+          {user && group.Organizer.id === user.id && (
+            <div className="gd-fc">
+              <button
+                className="gd-f"
+                onClick={(e) => history.push(`/groups/${groupId}/events/new`)}
+              >
+                Create Event
+              </button>
+              <OpenModalButton
+                buttonText="Edit Group"
+                modalComponent={
+                  <EditGroupModal group={group} groupId={groupId} />
+                }
+              />
+              <OpenModalButton
+                buttonText="Delete Group"
+                modalComponent={<ConfirmationModal groupId={groupId} />}
+              />
+            </div>
+          )}
         </div>
       </div>
-      <div className="gd-body">
-        <div className="gd-description">
-          <h2 className="gd-organizer">Organizer</h2>
-          <p className="gd-info">
-            {group.Organizer.firstName} {group.Organizer.lastName}
-          </p>
-          <h3 className="gd-about">What We're About</h3>
-          <p className="gd-about-info">{group.about}</p>
-        </div>
-        {futureEvents.length > 0 && (
-          <div>
-            <h3>Upcoming Events</h3>
-            <h4>
-              {futureEvents.forEach((key) => (
-                <EventCard id={associatedEvents[key].id} />
-              ))}
-            </h4>
+      <div className="gd-bgc">
+        <div className="gd-body">
+          <div className="gd-description">
+            <h2 className="gd-organizer">Organizer</h2>
+            <p className="gd-info">
+              {group.Organizer.firstName} {group.Organizer.lastName}
+            </p>
+            <h3 className="gd-about">What We're About</h3>
+            <p className="gd-about-info">{group.about}</p>
           </div>
-        )}
+          {futureEvents.length > 0 && (
+            <div>
+              <h3>Upcoming Events</h3>
+              <h4>
+                {futureEvents.forEach((key) => (
+                  <EventCard id={associatedEvents[key].id} />
+                ))}
+              </h4>
+            </div>
+          )}
 
-        {futureEvents.map((key) => (
-          <EventCard id={associatedEvents[key].id} />
-        ))}
+          {futureEvents.map((key) => (
+            <EventCard id={associatedEvents[key].id} />
+          ))}
 
-        {/* {pastEvents.map((event) => (
+          {/* {pastEvents.map((event) => (
           <EventCard key={event.id} id={event.id} />
         ))} */}
 
-        {pastEvents.length > 0 && (
-          <div>
-            <h3>Past Events</h3>
-            <h4>
-              {pastEvents.map((event) => (
-                <EventCard key={event.id} id={event.id} />
-              ))}
-            </h4>
-          </div>
-        )}
+          {pastEvents.length > 0 && (
+            <div>
+              <h3>Past Events</h3>
+              <h4>
+                {pastEvents.map((event) => (
+                  <EventCard key={event.id} id={event.id} />
+                ))}
+              </h4>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

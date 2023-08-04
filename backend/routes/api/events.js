@@ -69,7 +69,6 @@ router.get("/", async (req, res) => {
     delete event.Attendances;
     delete event.EventImages;
 
-    delete event.description;
     delete event.capacity;
     delete event.price;
     delete event.createdAt;

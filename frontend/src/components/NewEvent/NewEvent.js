@@ -33,26 +33,26 @@ const NewEvent = () => {
     else return false;
   };
 
-  useEffect(() => {
-    const errors = {};
-    // if (!name) errors["name"] = "Name is required";
-    if (name.length < 5) errors["name"] = "Name must be atleast 5 characters";
-    if (!price) errors["city"] = "City is required";
-    if (!description) errors["state"] = "State is required";
-    if (!type) errors["type"] = "Group Type is required";
-    if (!isPrivate) errors["isPrivate"] = "Visibility Type is required";
-    if (!description) errors["description"] = "Description is required";
-    if (startDateCheck(startDate))
-      errors["startDate"] = "Start date must be in the future";
-    if (endDateCheck(startDate, endDate))
-      errors["endDate"] = "End date must be after Start date";
-    // if (
-    //   !(url.includes(".png") || url.includes(".jpg") || url.includes(".jpeg"))
-    // )
-    //   errors["url"] = "Image URL must end in .png, .jpg, or .jpeg";
-    if (!url) errors["url"] = "Url is required";
-    setValidationErrors(errors);
-  }, [name, price, startDate, endDate, description, type, isPrivate, url]);
+  // useEffect(() => {
+  //   const errors = {};
+  //   // if (!name) errors["name"] = "Name is required";
+  //   if (name.length < 5) errors["name"] = "Name must be atleast 5 characters";
+  //   if (!price) errors["city"] = "City is required";
+  //   if (!description) errors["state"] = "State is required";
+  //   if (!type) errors["type"] = "Group Type is required";
+  //   if (!isPrivate) errors["isPrivate"] = "Visibility Type is required";
+  //   if (!description) errors["description"] = "Description is required";
+  //   if (startDateCheck(startDate))
+  //     errors["startDate"] = "Start date must be in the future";
+  //   if (endDateCheck(startDate, endDate))
+  //     errors["endDate"] = "End date must be after Start date";
+  //   // if (
+  //   //   !(url.includes(".png") || url.includes(".jpg") || url.includes(".jpeg"))
+  //   // )
+  //   //   errors["url"] = "Image URL must end in .png, .jpg, or .jpeg";
+  //   if (!url) errors["url"] = "Url is required";
+  //   setValidationErrors(errors);
+  // }, [name, price, startDate, endDate, description, type, isPrivate, url]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -81,9 +81,9 @@ const NewEvent = () => {
           setValidationErrors(data.errors);
         }
       })
-      .then(history.push("/events"));
-
-    console.log(eventDetails);
+      .then((res) => {
+        if (res) history.push(`/events/${res.id}`);
+      });
   };
 
   return (
@@ -212,11 +212,7 @@ const NewEvent = () => {
             <p className="errors">{validationErrors.description}</p>
           )}
         </div>
-        <button
-          type="submit"
-          disabled={Object.values(validationErrors).length > 1}
-          className="createGroup"
-        >
+        <button type="submit" className="createGroup">
           Create Event
         </button>
       </form>

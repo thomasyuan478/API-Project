@@ -56,9 +56,11 @@ export const postEvent = (event, groupId) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(event),
   });
-  const createdEvent = await response.json();
-  dispatch(createEvent(createdEvent));
-  return response;
+  if (response.ok) {
+    const createdEvent = await response.json();
+    dispatch(createEvent(createdEvent));
+    return createdEvent;
+  } else return response;
 };
 
 export const deleteEventThunk = (eventId) => async (dispatch) => {

@@ -9,8 +9,6 @@ import { getEventDetail } from "../../store/event";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteEventThunk } from "../../store/event";
-import OpenModalButton from "../OpenModalButton";
-import EditGroupModal from "../EditGroupModal";
 import { getGroupDetail, getGroups } from "../../store/groups";
 
 const EventDetail = () => {
@@ -30,7 +28,6 @@ const EventDetail = () => {
   // console.log("Events page", state);
 
   if (!state.singleEvent) return null;
-  if (!user) return null;
 
   const event = state.singleEvent;
   const images = event.EventImages;
@@ -43,6 +40,13 @@ const EventDetail = () => {
 
   console.log("states", event);
   // console.log("Test Case", user.id, event.Group.organizerId);
+
+  let check = false;
+  if (user) {
+    if (event.Group) {
+      if (user.id === event.Group.organizerId) check = true;
+    }
+  }
 
   const deleteButton = (e) => {
     e.preventDefault();
@@ -98,7 +102,7 @@ const EventDetail = () => {
                 />
               )} */}
             </div>
-            {event.Group && user.id === event.Group.organizerId && (
+            {event.Group && check && (
               <button onClick={deleteButton}>Delete Event</button>
             )}
             <div className="e-det">

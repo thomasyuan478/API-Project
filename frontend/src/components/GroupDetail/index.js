@@ -86,7 +86,7 @@ const GroupDetail = () => {
             <p>
               {group.city}, {group.state}
             </p>
-            <p>## events * {group.private ? "Private" : "Public"}</p>
+            <p>## * {group.private ? "Private" : "Public"}</p>
             <p>
               Organized by {group.Organizer.firstName}{" "}
               {group.Organizer.lastName}

@@ -5,11 +5,23 @@
 }
 
 .slide{
-  width: 800px;
+  width: auto;
   display: flex;
   justify-content: left;
   margin-top: 20px;
   margin-bottom: 10px;
   border-top: 1px gray solid;
   padding-top: 10px;
+}
+
+.gs-con > h3{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 50%;
+}
+
+.s-ic{
+  height: 140px;
+  width: 200px;
+  margin-right: 20px;
 }

@@ -22,8 +22,10 @@ const GroupCard = ({ obj, id }) => {
   return (
     <>
       <div className="slide">
-        <img className="slide-img" src={state.previewImage}></img>
-        <div onClick={onClick}>
+        <div className="s-ic">
+          <img className="slide-img" src={state.previewImage}></img>
+        </div>
+        <div className="gs-con" onClick={onClick}>
           <h3>{state.name}</h3>
           <span>
             {state.city}, {state.state}

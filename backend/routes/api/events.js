@@ -511,7 +511,7 @@ router.put("/:eventId", requireAuth, async (req, res, next) => {
       if (new Date(endDate).toString() === "Invalid Date")
         err.errors.endDate = "Valid date required";
       else if (endDateCheck(startDate, endDate))
-        err.errors.endDate = "End date is less than start date";
+        err.errors.endDate = "End date is before than start date";
       next(err);
     }
 

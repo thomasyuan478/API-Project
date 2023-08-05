@@ -4,9 +4,15 @@
   background-color: white;
 }
 
+
+
 .fa-user-circle{
   color: rgb(255, 115, 0);
   font-size: 2.0em;
+}
+
+.fa-user-circle:hover{
+  cursor: pointer;
 }
 
 .nav-func{

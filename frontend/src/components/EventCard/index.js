@@ -31,9 +31,10 @@ const EventCard = ({ id }) => {
           <img className="slide-img" src={eventState.previewImage}></img>
           <div className="ec-cc" onClick={onClick}>
             <div>
-              {eventState.startDate.slice(0, 12) +
-                " · " +
-                eventState.startDate.slice(12)}
+              {eventState.startDate &&
+                eventState.startDate.slice(0, 12) +
+                  " · " +
+                  eventState.startDate.slice(12)}
               <h3 className="ec-ti">{eventState.name}</h3>
             </div>
             {eventState.Venue && (

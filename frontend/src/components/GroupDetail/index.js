@@ -11,6 +11,7 @@ import ConfirmationModal from "../ConfirmationModal";
 import OpenModalButton from "../OpenModalButton";
 import EditGroupModal from "../EditGroupModal";
 import DisplayEventCard from "../DisplayEventCard";
+import { getEvents } from "../../store/event";
 
 const GroupDetail = () => {
   const { groupId } = useParams();
@@ -20,6 +21,8 @@ const GroupDetail = () => {
   const group = useSelector((state) => state.groups.singleGroup);
   // const images = useSelector((state) => state.groups.singleGroup.GroupImages);
   const history = useHistory();
+
+  const eventObj = useSelector((state) => state.events.Events);
 
   useEffect(() => {
     dispatch(getGroupDetail(groupId));
@@ -89,6 +92,11 @@ const GroupDetail = () => {
   //     if (eventDate < currentDate) pastEvents.push(associatedEvents[event]);
   //   });
   // }
+
+  useEffect(() => {
+    if (eventObj && events && Object.keys(eventObj).length !== events.length)
+      dispatch(getEvents());
+  });
 
   const deleteButton = (e) => {
     e.preventDefault();

@@ -13,9 +13,11 @@ function Navigation({ isLoaded }) {
         PartyFinder
       </NavLink>
       <div className="nav-func">
-        <NavLink className="nav-group" to="/groups/new">
-          Start a Group
-        </NavLink>
+        {sessionUser && (
+          <NavLink className="nav-group" to="/groups/new">
+            Start a Group
+          </NavLink>
+        )}
         {isLoaded && <ProfileButton user={sessionUser} />}
       </div>
     </div>

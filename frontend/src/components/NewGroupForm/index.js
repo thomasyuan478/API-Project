@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./NewGroupForm.css";
 import { postGroup } from "../../store/groups";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const NewGroupForm = () => {
@@ -16,6 +16,13 @@ const NewGroupForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const sessionUser = useSelector((state) => state.session.user);
+
+  useEffect(() => {
+    if (!sessionUser) alert("You must be signed in to create a group");
+  }, []);
+
+  // const sessionUser = useSelector(())
   // useEffect(() => {
   //   const errors = {};
   //   if (!name) errors["name"] = "Name is required";

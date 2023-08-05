@@ -35,14 +35,9 @@ const EventDetail = () => {
   let gImages;
   if (event.Group) gImages = event.Group.GroupImages;
 
-  // console.log(groups);
-  // console.log("THE THING", groups[event.Group.id]);
-
-  const displayImg =
-    "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg";
-
-  // console.log("states", event);
-  // console.log("Test Case", user.id, event.Group.organizerId);
+  let cost;
+  if (event.price === 0) cost = "Free";
+  else cost = "$" + event.price + " Admission";
 
   let check = false;
   if (user) {
@@ -50,16 +45,6 @@ const EventDetail = () => {
       if (user.id === event.Group.organizerId) check = true;
     }
   }
-
-  const deleteButton = (e) => {
-    e.preventDefault();
-
-    try {
-      dispatch(deleteEventThunk(eventId)).then(history.push("/events"));
-    } catch (errors) {
-      throw new Error("Dispatch Error");
-    }
-  };
 
   const redirectButton = (e) => {
     // console.log("BUTTON HAS FIRED");
@@ -108,22 +93,24 @@ const EventDetail = () => {
                   <div className="e-times">
                     <p>
                       Start:{" "}
-                      {event.startDate.slice(0, 12) +
-                        " · " +
-                        event.startDate.slice(12)}
+                      {event.startDate &&
+                        event.startDate.slice(0, 12) +
+                          " · " +
+                          event.startDate.slice(12)}
                     </p>
                     <p>
                       End:{" "}
-                      {event.startDate.slice(0, 12) +
-                        " · " +
-                        event.startDate.slice(12)}
+                      {event.startDate &&
+                        event.startDate.slice(0, 12) +
+                          " · " +
+                          event.startDate.slice(12)}
                     </p>
                   </div>
                 </div>
                 <div className="e-time">
                   <i class="fas fa-dollar-sign"></i>
                   <div className="e-times">
-                    <p>{"$" + event.price + " Admission"}</p>
+                    <p>{cost}</p>
                   </div>
                 </div>
                 <div className="e-time special">
@@ -138,7 +125,9 @@ const EventDetail = () => {
                       </span>
                       <OpenModalButton
                         buttonText="Delete Event"
-                        modalComponent={<ConfirmationModal eventId={eventId} />}
+                        modalComponent={
+                          <ConfirmationModal event={event} eventId={eventId} />
+                        }
                       />
                     </>
                   )}

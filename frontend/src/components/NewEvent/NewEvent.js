@@ -24,22 +24,22 @@ const NewEvent = () => {
   const history = useHistory();
   const { groupId } = useParams();
 
-  const startDateCheck = (date) => {
-    if (new Date(date).toString() === "Invalid Date") return true;
-    if (new Date(date) <= new Date()) return true;
-    else return false;
-  };
+  // const startDateCheck = (date) => {
+  //   if (new Date(date).toString() === "Invalid Date") return true;
+  //   if (new Date(date) <= new Date()) return true;
+  //   else return false;
+  // };
 
-  const endDateCheck = (startDate, endDate) => {
-    if (new Date(endDate) <= new Date(startDate)) return true;
-    else return false;
-  };
+  // const endDateCheck = (startDate, endDate) => {
+  //   if (new Date(endDate) <= new Date(startDate)) return true;
+  //   else return false;
+  // };
 
   const group = useSelector((state) => state.groups.singleGroup);
   console.log("Hello from Event Form", group);
 
   useEffect(() => {
-    if (!group) dispatch(getGroupDetail(groupId));
+    if (!Object.keys(group).length) dispatch(getGroupDetail(groupId));
   }, [dispatch]);
 
   // useEffect(() => {

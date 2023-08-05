@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { getEventDetail, getEvents } from "../../store/event";
 
-const EventCard = ({ id }) => {
+const EventCard = ({ id, group }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -15,11 +15,12 @@ const EventCard = ({ id }) => {
   const events = useSelector((state) => state.events.Events);
   const test = useSelector((state) => state.events);
 
-  console.log(Object.keys(events).length);
+  // console.log(Object.keys(events).length);
+  console.log(eventState);
 
-  useEffect(() => {
-    if (!Object.keys(events).length) dispatch(getEvents());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (!Object.keys(events).length) dispatch(getEvents());
+  // }, [dispatch]);
 
   const onClick = () => {
     history.push(`/events/${eventState.id}`);
@@ -34,9 +35,10 @@ const EventCard = ({ id }) => {
           <img className="slide-img2" src={eventState.previewImage}></img>
           <div className="dec-cc" onClick={onClick}>
             <div>
-              {eventState.startDate.slice(0, 12) +
-                " · " +
-                eventState.startDate.slice(12)}
+              {eventState.startDate &&
+                eventState.startDate.slice(0, 12) +
+                  " · " +
+                  eventState.startDate.slice(12)}
               <h3 className="dec-ti">{eventState.name}</h3>
             </div>
             {eventState.Venue && (

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteEventThunk } from "../../store/event";
 import "./ConfirmationModal.css";
 
-const ConfirmationModal = ({ groupId, eventId }) => {
+const ConfirmationModal = ({ groupId, eventId, event }) => {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -19,10 +19,10 @@ const ConfirmationModal = ({ groupId, eventId }) => {
   };
 
   const deleteEvent = (e) => {
-    dispatch(deleteEventThunk(eventId))
+    dispatch(deleteEventThunk(event.id))
       .then(closeModal())
       .then((res) => {
-        if (res) history.push("/events");
+        if (res) history.push(`/groups/${event.Group.id}`);
       });
   };
 

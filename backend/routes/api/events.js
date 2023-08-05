@@ -8,6 +8,7 @@ const { Attendance } = require("../../db/models");
 const { EventImage } = require("../../db/models");
 const { Membership } = require("../../db/models");
 const { User } = require("../../db/models");
+const { GroupImage } = require("../../db/models");
 
 const { requireAuth } = require("../../utils/auth");
 const user = require("../../db/models/user");
@@ -173,6 +174,7 @@ router.get("/:eventId", async (req, res) => {
       {
         model: Group,
         attributes: ["id", "name", "private", "city", "state", "organizerId"],
+        include: { model: GroupImage },
       },
       {
         model: Venue,
@@ -192,6 +194,8 @@ router.get("/:eventId", async (req, res) => {
   }
 
   const resEvent = event.toJSON();
+  const organizer = await User.findByPk(resEvent.Group.organizerId);
+  const resOrganizer = await organizer.toJSON();
   resEvent.startDate = resEvent.startDate.toString().slice(4, 24);
   resEvent.endDate = resEvent.endDate.toString().slice(4, 24);
   delete resEvent.createdAt;
@@ -201,6 +205,9 @@ router.get("/:eventId", async (req, res) => {
       eventId: req.params.eventId,
     },
   });
+
+  resEvent.Group.firstName = resOrganizer.firstName;
+  resEvent.Group.lastName = resOrganizer.lastName;
 
   res.json(resEvent);
 });

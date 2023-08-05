@@ -1,0 +1,33 @@
+.userbutton{
+  margin: 0px 12px;
+  border: none;
+  background-color: white;
+}
+
+
+
+.fa-user-circle{
+  color: rgb(255, 115, 0);
+  font-size: 2.0em;
+}
+
+.fa-user-circle:hover{
+  cursor: pointer;
+}
+
+.nav-func{
+  display: flex;
+  align-items: center;
+}
+
+.nav-func > button {
+  border: none;
+  background: white;
+  color: teal;
+  text-decoration: underline;
+  /* font-size: large; */
+}
+
+.nav-func > button:hover{
+  cursor: pointer;
+}

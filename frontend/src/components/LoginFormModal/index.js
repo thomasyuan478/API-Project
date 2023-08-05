@@ -24,33 +24,64 @@ function LoginFormModal() {
       });
   };
 
+  const loginDemoUser = (e) => {
+    return dispatch(
+      sessionActions.login({
+        email: "user2@user.io",
+        password: "password3",
+      })
+    )
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
+  };
+
   return (
     <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.credential && (
-          <p>{errors.credential}</p>
-        )}
-        <button type="submit">Log In</button>
-      </form>
+      <div className="login-modal">
+        <h1 className="login-title">Log In</h1>
+        <form onSubmit={handleSubmit}>
+          {errors.credential && <p id="li-error">{errors.credential}</p>}
+          <div className="login-fields">
+            {/* <label>
+              Email
+              </label> */}
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Email"
+            />
+          </div>
+          <div className="login-fields">
+            {/* <label>
+              Password
+              </label> */}
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder="Password"
+            />
+          </div>
+          <div className="li-bc">
+            <button className="li-b" type="submit">
+              Log In
+            </button>
+          </div>
+        </form>
+        <div className="li-bc">
+          <button className="li-bd" onClick={loginDemoUser}>
+            Demo User
+          </button>
+        </div>
+      </div>
     </>
   );
 }

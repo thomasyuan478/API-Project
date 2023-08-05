@@ -1,21 +1,41 @@
 .headers{
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
+
 }
 
 .headers-container{
-  margin: 0px 100px;
+  margin-left: 22%;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   flex-direction: column;
-  align-items: center;
 }
 
 .headers-title{
-  margin: 0px 20px;
+  margin-left: 0px;
+  margin-right: 35px;
+  margin-bottom: 10px;
 }
 
 .headers-content{
   margin-top: 10px;
-  margin-right: 63px;
+  margin-bottom: 0px;
+}
+
+.slide-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-left: 22%;
+  margin-right: 10%;
+}
+
+.active-page{
+  text-decoration: underline;
+  color: green;
+}
+
+.inactive:hover{
+ cursor: pointer;
+ color: red;
 }

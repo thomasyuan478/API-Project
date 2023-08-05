@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
-import OpenModalButton from '../OpenModalButton';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
+import { useDispatch } from "react-redux";
+import * as sessionActions from "../../store/session";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
+import "./ProfileButton.css";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function ProfileButton({ user }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -24,7 +27,7 @@ function ProfileButton({ user }) {
       }
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
@@ -36,17 +39,35 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
+  const redirect = (e) => {
+    history.push("/groups");
+    setShowMenu(false);
+  };
+
+  const redirectEvents = (e) => {
+    history.push("/events");
+    setShowMenu(false);
+  };
+
   return (
     <>
-      <button onClick={openMenu}>
+      <button className="userbutton" onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
+            <li>
+              {user.firstName} {user.lastName}
+            </li>
             <li>{user.email}</li>
+            <li>
+              <button onClick={redirect}>View Groups</button>
+            </li>
+            <li>
+              <button onClick={redirectEvents}>View Events</button>
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
@@ -64,6 +85,12 @@ function ProfileButton({ user }) {
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
+            </li>
+            <li>
+              <button onClick={redirect}>View Groups</button>
+            </li>
+            <li>
+              <button onClick={redirectEvents}>View Events</button>
             </li>
           </>
         )}

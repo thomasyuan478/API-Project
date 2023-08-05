@@ -1,0 +1,45 @@
+.dec-cc{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.dec-ti{
+  padding-right: 55px;
+}
+
+.dec-oc{
+  margin-right: 15%;
+  background-color: white;
+  border-radius: 20px;
+  width: 65%;
+}
+
+.dec-oc:hover{
+  cursor: pointer;
+}
+
+.dec-cd{
+  width: 85%;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.slide2{
+  width: auto;
+    display: flex;
+    justify-content: left;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+.slide-img2 {
+    height: 140px;
+    width: 200px;
+    margin-right: 20px;
+    margin-left: 35px;
+    margin-top: 20px;
+}

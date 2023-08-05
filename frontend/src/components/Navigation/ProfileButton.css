@@ -19,3 +19,15 @@
   display: flex;
   align-items: center;
 }
+
+.nav-func > button {
+  border: none;
+  background: white;
+  color: teal;
+  text-decoration: underline;
+  /* font-size: large; */
+}
+
+.nav-func > button:hover{
+  cursor: pointer;
+}

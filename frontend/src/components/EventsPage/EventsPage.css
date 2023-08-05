@@ -1,0 +1,9 @@
+.active-page{
+  text-decoration: underline;
+  color: green;
+}
+
+.inactive:hover{
+  cursor: pointer;
+  color: red;
+ }

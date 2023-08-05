@@ -1,3 +1,7 @@
+#root{
+  font-family: sans-serif;
+}
+
 .base{
   margin-left: 80px;
   margin-right: 80px;
@@ -64,6 +68,9 @@
   justify-content: center;
   font-size: large;
   font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 15px;
+  color: teal;
 }
 
 .card-description{
@@ -73,10 +80,13 @@
 .join-button{
   background-color: teal;
   color: white;
-  padding: 9px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
 }
 
 .button-container{
+  margin-top: 14px;
   display: flex;
   justify-content: center;
 }

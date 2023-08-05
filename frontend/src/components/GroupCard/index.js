@@ -1,25 +1,44 @@
-import './GroupCard.css'
+import "./GroupCard.css";
 
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getGroups } from '../../store/groups';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getGroups } from "../../store/groups";
+import { Navigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const GroupCard = (props) => {
+const GroupCard = ({ obj, id }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  return(
+  const state = useSelector((state) => state.groups.allGroups[id]);
+  // console.log("State", state, id);
+
+  const onClick = () => {
+    history.push(`/groups/${obj.id}`);
+  };
+
+  if (!state) return null;
+
+  return (
     <>
-      <div className='slide'>
-        <img className='slide-img' src='https://cdn2.thecatapi.com/images/chi.jpg'></img>
-        <div>
-          <h3>Group Name</h3>
-          <span>Location</span>
-          <p>Lorem Ipsum and so on and so forth without generating nay Lorem ipsum</p>
-          <div>## events * Public</div>
+      <div onClick={onClick} className="slide">
+        <div className="s-ic">
+          <img className="slide-img" src={state.previewImage}></img>
+        </div>
+        <div className="gs-con">
+          <h3>{state.name}</h3>
+          <span>
+            {state.city}, {state.state}
+          </span>
+          <p>{state.about}</p>
+          <div>
+            {state.numEvents} Events * {state.private ? "Private" : "Public"}
+          </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
+
 
 export default GroupCard;

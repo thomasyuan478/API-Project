@@ -1,0 +1,17 @@
+.ec-cc{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.ec-ti{
+  width: 28rem;
+}
+
+.ec-oc{
+  margin-right: 15%;
+}
+
+.ec-cd{
+  width: 85%;
+}

@@ -1,0 +1,50 @@
+.login-modal{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255);
+}
+
+.login-title{
+  display: flex;
+  justify-content: center;
+}
+
+.login-fields{
+  margin: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#li-error{
+  width: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 0px;
+}
+
+.li-bc{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.li-b{
+  display: flex;
+  justify-content: center;
+  width: 358px;
+  padding: 10px 0px;
+  background-color: rgb(255, 115, 0);
+  color: white;
+}
+
+.li-bd{
+  display: flex;
+  justify-content: center;
+  width: 358px;
+  padding: 10px 0px;
+  background-color: rgb(255, 115, 0);;
+  color: white;
+}

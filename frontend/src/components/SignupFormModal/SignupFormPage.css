@@ -1,0 +1,30 @@
+.su-t{
+  display: flex;
+  justify-content: center;
+}
+
+.su-fc{
+  margin: 0px 15px;
+}
+
+.su-bc{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.su-b{
+  display: flex;
+  justify-content: center;
+  width: 358px;
+  padding: 10px 0px;
+  background-color: rgb(255, 115, 0);
+  color: white;
+}
+
+.su-e{
+  width: 358px;
+  display: flex;
+  justify-content: center;
+  margin-top: 0px;
+}

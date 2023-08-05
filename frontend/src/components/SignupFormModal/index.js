@@ -37,77 +37,85 @@ function SignupFormModal() {
         });
     }
     return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
+      confirmPassword:
+        "Confirm Password field must be the same as the Password field",
+      // "Passwords must be the same",
     });
   };
 
   return (
     <>
-      <h1>Sign Up</h1>
+      <h1 className="su-t">Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          First Name
+        <div className="su-fc">
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
+            placeholder="First Name"
           />
-        </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
-          Last Name
+
+          {errors.firstName && <p className="su-e">{errors.firstName}</p>}
+        </div>
+        <div className="su-fc">
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
+            placeholder="Last Name"
           />
-        </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
-          Password
+
+          {errors.lastName && <p className="su-e">{errors.lastName}</p>}
+        </div>
+        <div className="su-fc">
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="Email"
+          />
+          {errors.email && <p className="su-e">{errors.email}</p>}
+        </div>
+        <div className="su-fc">
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            placeholder="Username"
+          />
+          {errors.username && <p className="su-e">{errors.username}</p>}
+        </div>
+        <div className="su-fc">
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Password"
           />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
+          {errors.password && <p className="su-e">{errors.password}</p>}
+        </div>
+        <div className="su-fc">
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            placeholder="Confirm Password"
           />
-        </label>
-        {errors.confirmPassword && (
-          <p>{errors.confirmPassword}</p>
-        )}
-        <button type="submit">Sign Up</button>
+          {errors.confirmPassword && (
+            <p className="su-e">{errors.confirmPassword}</p>
+          )}
+        </div>
+        <div className="su-bc">
+          <button className="su-b" type="submit">
+            Sign Up
+          </button>
+        </div>
       </form>
     </>
   );

@@ -1,0 +1,51 @@
+.el-container{
+  border-bottom: 1px gray solid;
+
+}
+
+.errors{
+  color: red;
+}
+
+.createGroup{
+  margin-top: 10px;
+  padding: 10px;
+  background-color: red;
+  color: white;
+}
+
+.gf-container{
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.el-container > p{
+  width: 60%;
+}
+
+div > input{
+  margin-bottom: 20px;
+}
+
+div> textarea{
+  margin-bottom: 20px;
+}
+
+.gf-flair{
+  font-weight: bold;
+  color: teal;
+
+}
+
+.gf-i-container{
+  margin-top: 20px;
+}
+
+input{
+  width: 350px;
+}
+
+textarea{
+  width: 350px;
+  height: 72px;
+}

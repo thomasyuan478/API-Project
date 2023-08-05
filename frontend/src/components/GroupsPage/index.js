@@ -15,8 +15,8 @@ const GroupPage = () => {
     dispatch(getGroups());
   }, [dispatch]);
 
-  console.log("Console Log on GroupsList", groupList.allGroups);
-  console.log(Object.keys(groupList.allGroups));
+  // console.log("Console Log on GroupsList", groupList.allGroups);
+  // console.log(Object.keys(groupList.allGroups));
 
   const keys = Object.keys(groupList.allGroups);
   const groups = groupList.allGroups;

@@ -10,7 +10,7 @@ import { deleteGroupThunk } from "../../store/groups";
 import ConfirmationModal from "../ConfirmationModal";
 import OpenModalButton from "../OpenModalButton";
 import EditGroupModal from "../EditGroupModal";
-import EventCard from "../EventCard";
+import DisplayEventCard from "../DisplayEventCard";
 
 const GroupDetail = () => {
   const { groupId } = useParams();
@@ -34,35 +34,64 @@ const GroupDetail = () => {
   // const group = state.singleGroup;
   const images = group.GroupImages;
 
-  const defaultImg =
-    "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg";
-
-  // console.log("images object", images);
   const associatedEvents = useSelector(
     (state) => state.groups.singleGroup.associatedEvents
   );
-  // const associatedEvents = group.associatedEvents;
-  console.log("associated events", associatedEvents);
+
+  // let test = Object.values(eventsList.Events);
+  // test.sort((a, b) => {
+  //   let da = new Date(a.startDate);
+  //   let db = new Date(b.startDate);
+  //   return da - db;
+  // });
+
+  // test.reverse();
+
+  // const finalSort = [];
+  // test.forEach((event) => {
+  //   const date = new Date();
+  //   const checkdate = new Date(event.startDate);
+  //   if (checkdate < date) finalSort.push(event);
+  //   else finalSort.unshift(event);
+  // });
+
   let events;
+  if (associatedEvents) events = Object.keys(associatedEvents);
   let futureEvents = [];
   let pastEvents = [];
   if (associatedEvents) {
-    events = Object.keys(associatedEvents);
-    console.log("events, inside conditional", events);
-    events.map((event) => {
-      const currentDate = new Date();
-      const eventDate = new Date(associatedEvents[event].startDate);
-      if (eventDate > currentDate) futureEvents.push(event);
-      if (eventDate < currentDate) pastEvents.push(associatedEvents[event]);
+    const test = Object.values(associatedEvents);
+    test.sort((a, b) => {
+      let da = new Date(a.startDate);
+      let db = new Date(b.startDate);
+      return da - db;
+    });
+
+    test.reverse();
+
+    test.forEach((event) => {
+      const date = new Date();
+      const checkdate = new Date(event.startDate);
+      if (checkdate < date) pastEvents.push(event);
+      else futureEvents.unshift(event);
     });
   }
-  console.log("futureEvents", futureEvents);
-  console.log("Pastevents", pastEvents);
+
+  // let events;
+  // let futureEvents = [];
+  // let pastEvents = [];
+  // if (associatedEvents) {
+  //   events = Object.keys(associatedEvents);
+  //   events.map((event) => {
+  //     const currentDate = new Date();
+  //     const eventDate = new Date(associatedEvents[event].startDate);
+  //     if (eventDate > currentDate) futureEvents.push(event);
+  //     if (eventDate < currentDate) pastEvents.push(associatedEvents[event]);
+  //   });
+  // }
 
   const deleteButton = (e) => {
     e.preventDefault();
-
-    console.log("Hello from delete button");
 
     try {
       dispatch(deleteGroupThunk(groupId)).then(history.push("/groups"));
@@ -93,35 +122,22 @@ const GroupDetail = () => {
             </p>
             <p className="gd-d">
               {" "}
-              {events.length} Events * {group.private ? "Private" : "Public"}
+              {events.length} Events · {group.private ? "Private" : "Public"}
             </p>
             <p className="gd-d">
               Organized by {group.Organizer.firstName}{" "}
               {group.Organizer.lastName}
             </p>
-            {/* {user && group.Organizer.id === user.id && (
-              <button
-                onClick={(e) => history.push(`/groups/${groupId}/events/new`)}
-              >
-                Create Event
-              </button>
-            )} */}
-            {/* {user && group.Organizer.id === user.id && (
-              <OpenModalButton
-                buttonText="Edit Group"
-                modalComponent={
-                  <EditGroupModal group={group} groupId={groupId} />
-                }
-              />
-            )}
-            {user && group.Organizer.id === user.id && (
-              <OpenModalButton
-                buttonText="Delete Group"
-                modalComponent={<ConfirmationModal groupId={groupId} />}
-              /> )}*/}
           </div>
           {user && group.Organizer.id !== user.id && (
-            <button className="group-button">Join This Group</button>
+            <button
+              onClick={(e) => {
+                alert("Feature Coming Soon");
+              }}
+              className="group-button"
+            >
+              Join This Group
+            </button>
           )}
           {user && group.Organizer.id === user.id && (
             <div className="gd-fc">
@@ -159,19 +175,19 @@ const GroupDetail = () => {
             <div>
               <h3>Upcoming Events</h3>
               <h4>
-                {futureEvents.forEach((key) => (
-                  <EventCard id={associatedEvents[key].id} />
+                {futureEvents.forEach((event) => (
+                  <DisplayEventCard id={associatedEvents[event.id].id} />
                 ))}
               </h4>
             </div>
           )}
 
-          {futureEvents.map((key) => (
-            <EventCard id={associatedEvents[key].id} />
+          {futureEvents.map((event) => (
+            <DisplayEventCard id={associatedEvents[event.id].id} />
           ))}
 
           {/* {pastEvents.map((event) => (
-          <EventCard key={event.id} id={event.id} />
+          <DisplayEventCard key={event.id} id={event.id} />
         ))} */}
 
           {pastEvents.length > 0 && (
@@ -179,7 +195,7 @@ const GroupDetail = () => {
               <h3>Past Events</h3>
               <h4>
                 {pastEvents.map((event) => (
-                  <EventCard key={event.id} id={event.id} />
+                  <DisplayEventCard key={event.id} id={event.id} />
                 ))}
               </h4>
             </div>

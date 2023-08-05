@@ -16,11 +16,27 @@ const EventPage = () => {
     dispatch(getEvents());
   }, [dispatch]);
 
-  console.log("Console Log on EventsPage", eventsList.Events);
-  console.log(Object.keys(eventsList.Events));
+  // console.log("Console Log on EventsPage", eventsList.Events);
+  // console.log(Object.keys(eventsList.Events));
 
   const keys = Object.keys(eventsList.Events);
   const events = eventsList.Events;
+  let test = Object.values(eventsList.Events);
+  test.sort((a, b) => {
+    let da = new Date(a.startDate);
+    let db = new Date(b.startDate);
+    return da - db;
+  });
+
+  test.reverse();
+
+  const finalSort = [];
+  test.forEach((event) => {
+    const date = new Date();
+    const checkdate = new Date(event.startDate);
+    if (checkdate < date) finalSort.push(event);
+    else finalSort.unshift(event);
+  });
 
   const redirect = (e) => {
     history.push("/groups");
@@ -38,11 +54,11 @@ const EventPage = () => {
         <p className="headers-content">Events in MeetUp</p>
       </div>
       <div className="slide-container">
-        {keys.map((key) => (
+        {finalSort.map((event) => (
           <EventCard
-            key={events[key].id}
-            id={events[key].id}
-            obj={events[key]}
+            key={events[event.id].id}
+            id={events[event.id].id}
+            obj={events[event.id]}
           />
         ))}
       </div>

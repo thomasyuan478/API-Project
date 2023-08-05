@@ -11,7 +11,7 @@ const GroupCard = ({ obj, id }) => {
   const history = useHistory();
 
   const state = useSelector((state) => state.groups.allGroups[id]);
-  console.log("State", state, id);
+  // console.log("State", state, id);
 
   const onClick = () => {
     history.push(`/groups/${obj.id}`);
@@ -21,11 +21,11 @@ const GroupCard = ({ obj, id }) => {
 
   return (
     <>
-      <div className="slide">
+      <div onClick={onClick} className="slide">
         <div className="s-ic">
           <img className="slide-img" src={state.previewImage}></img>
         </div>
-        <div className="gs-con" onClick={onClick}>
+        <div className="gs-con">
           <h3>{state.name}</h3>
           <span>
             {state.city}, {state.state}

@@ -44,6 +44,11 @@ function ProfileButton({ user }) {
     setShowMenu(false);
   };
 
+  const redirectEvents = (e) => {
+    history.push("/events");
+    setShowMenu(false);
+  };
+
   return (
     <>
       <button className="userbutton" onClick={openMenu}>
@@ -59,6 +64,9 @@ function ProfileButton({ user }) {
             <li>{user.email}</li>
             <li>
               <button onClick={redirect}>View Groups</button>
+            </li>
+            <li>
+              <button onClick={redirectEvents}>View Events</button>
             </li>
             <li>
               <button onClick={logout}>Log Out</button>
@@ -77,6 +85,12 @@ function ProfileButton({ user }) {
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
+            </li>
+            <li>
+              <button onClick={redirect}>View Groups</button>
+            </li>
+            <li>
+              <button onClick={redirectEvents}>View Events</button>
             </li>
           </>
         )}

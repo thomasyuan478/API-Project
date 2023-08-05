@@ -12,6 +12,7 @@ import EventDetail from "./components/EventDetail";
 import NewEvent from "./components/NewEvent/NewEvent";
 
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,6 +42,7 @@ function App() {
         </Route>
         <Route exact path="/groups/:groupId">
           <GroupDetail />
+
         </Route>
         <Route exact path="/events/:eventId">
           <EventDetail />

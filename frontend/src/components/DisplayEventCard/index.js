@@ -16,7 +16,8 @@ const EventCard = ({ id, group }) => {
   const test = useSelector((state) => state.events);
 
   // console.log(Object.keys(events).length);
-  console.log(eventState);
+  // console.log(eventState);
+
 
   // useEffect(() => {
   //   if (!Object.keys(events).length) dispatch(getEvents());

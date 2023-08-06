@@ -59,7 +59,8 @@ export const getGroups = () => async (dispatch) => {
   if (response.ok) {
     const groups = await response.json();
     dispatch(loadGroups(groups));
-    console.log("getGroups from thunk", groups);
+    // console.log("getGroups from thunk", groups);
+
   }
 };
 
@@ -75,7 +76,8 @@ export const getGroupDetail = (groupId) => async (dispatch) => {
     // events.forEach((event) => (group.associatedEvents[event.id] = event));
     // group.associatedEvents = associatedEvents.Events;
     dispatch(groupDetail(group));
-    console.log("getGroupsDetail from thunk", group, associatedEvents);
+    // console.log("getGroupsDetail from thunk", group, associatedEvents);
+
   }
 };
 
@@ -112,7 +114,8 @@ export const postGroup = (group) => async (dispatch) => {
   if (response.ok) {
     const createdGroup = await response.json();
     dispatch(createGroup(createdGroup));
-    console.log("Inside the post thuink", createdGroup);
+    // console.log("Inside the post thuink", createdGroup);
+
     return createdGroup;
   } else return response;
 };

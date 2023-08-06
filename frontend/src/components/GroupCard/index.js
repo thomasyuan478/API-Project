@@ -40,5 +40,4 @@ const GroupCard = ({ obj, id }) => {
   );
 };
 
-
 export default GroupCard;

@@ -109,6 +109,10 @@ const GroupDetail = () => {
   };
 
   if (!group.Organizer) return null;
+  if (group.id != groupId) {
+    // dispatch(getGroupDetail(groupId));
+    return null;
+  }
 
   return (
     <div className="Group-page-container">

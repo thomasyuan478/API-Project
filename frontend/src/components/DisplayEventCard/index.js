@@ -18,6 +18,7 @@ const EventCard = ({ id, group }) => {
   // console.log(Object.keys(events).length);
   // console.log(eventState);
 
+
   // useEffect(() => {
   //   if (!Object.keys(events).length) dispatch(getEvents());
   // }, [dispatch]);

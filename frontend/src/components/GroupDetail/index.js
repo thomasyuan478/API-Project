@@ -114,6 +114,7 @@ const GroupDetail = () => {
     return null;
   }
 
+
   return (
     <div className="Group-page-container">
       <span>

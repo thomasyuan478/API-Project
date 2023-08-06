@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
 
+
 function LandingPage({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
@@ -81,6 +82,7 @@ function LandingPage({ isLoaded }) {
           buttonText="Join Meetup"
           modalComponent={<SignupFormModal />}
         />
+
       </div>
     </div>
   );

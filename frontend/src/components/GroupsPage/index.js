@@ -17,6 +17,7 @@ const GroupPage = () => {
   // console.log(groupList);
   if (Object.keys(groupList.allGroups).length < 1) dispatch(getGroups());
 
+
   // console.log("Console Log on GroupsList", groupList.allGroups);
   // console.log(Object.keys(groupList.allGroups));
 
@@ -50,5 +51,6 @@ const GroupPage = () => {
     </>
   );
 };
+
 
 export default GroupPage;

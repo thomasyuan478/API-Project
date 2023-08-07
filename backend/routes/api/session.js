@@ -1,12 +1,12 @@
-const express = require('express');
-const { Op } = require('sequelize');
-const bcrypt = require('bcryptjs');
+const express = require("express");
+const { Op } = require("sequelize");
+const bcrypt = require("bcryptjs");
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { setTokenCookie, restoreUser } = require("../../utils/auth");
+const { User } = require("../../db/models");
 
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { check } = require("express-validator");
+const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
@@ -61,18 +61,18 @@ const router = express.Router();
 // );
 
 router.post(
-  '/',
+  "/",
   // validateLogin,
   async (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, password, username, credential } = req.body;
 
-    if(!email || !password){
-      const err = new Error('Login failed');
+    if (!username || !password) {
+      const err = new Error("Login failed");
       err.status = 400;
-      err.title = 'Login failed';
+      err.title = "Login failed";
       err.errors = {};
-      if(!email) err.errors.email = "Email is required";
-      if(!password) err.errors.password = "Password is required";
+      if (!username) err.errors.username = "Username is required";
+      if (!password) err.errors.password = "Password is required";
       return next(err);
     }
 
@@ -80,16 +80,19 @@ router.post(
       where: {
         // [Op.or]: {
         //   username: credential,
-          email: email
+        username: username,
         // }
-      }
+      },
     });
 
-    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-      const err = new Error('Login failed');
+    if (
+      !user ||
+      !bcrypt.compareSync(password, user.hashedPassword.toString())
+    ) {
+      const err = new Error("Login failed");
       err.status = 401;
-      err.title = 'Login failed';
-      err.errors = { credential: 'The provided credentials were invalid.' };
+      err.title = "Login failed";
+      err.errors = { credential: "The provided credentials were invalid." };
       return next(err);
     }
 
@@ -98,42 +101,37 @@ router.post(
       email: user.email,
       username: user.username,
       firstName: user.firstName,
-      lastName: user.lastName
+      lastName: user.lastName,
     };
 
     await setTokenCookie(res, safeUser);
 
     return res.json({
-      user: safeUser
+      user: safeUser,
     });
-  });
-
-router.delete(
-  '/',
-  (_req, res) => {
-    res.clearCookie('token');
-    return res.json({ message: 'success' });
   }
 );
 
-router.get(
-  '/',
-  (req, res) => {
-    const { user } = req;
-    if (user) {
-      const safeUser = {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName
-      };
-      return res.json({
-        user: safeUser
-      });
-    } else return res.json({ user: null });
-  }
-);
+router.delete("/", (_req, res) => {
+  res.clearCookie("token");
+  return res.json({ message: "success" });
+});
+
+router.get("/", (req, res) => {
+  const { user } = req;
+  if (user) {
+    const safeUser = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    };
+    return res.json({
+      user: safeUser,
+    });
+  } else return res.json({ user: null });
+});
 
 // ...
 module.exports = router;

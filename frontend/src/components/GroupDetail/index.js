@@ -185,7 +185,7 @@ const GroupDetail = () => {
           </div>
           {futureEvents.length > 0 && (
             <div>
-              <h3>Upcoming Events</h3>
+              <h3>Upcoming Events ({futureEvents.length})</h3>
               <h4>
                 {futureEvents.forEach((event) => (
                   <DisplayEventCard id={associatedEvents[event.id].id} />
@@ -204,7 +204,7 @@ const GroupDetail = () => {
 
           {pastEvents.length > 0 && (
             <div>
-              <h3>Past Events</h3>
+              <h3>Past Events ({pastEvents.length})</h3>
               <h4>
                 {pastEvents.map((event) => (
                   <DisplayEventCard key={event.id} id={event.id} />

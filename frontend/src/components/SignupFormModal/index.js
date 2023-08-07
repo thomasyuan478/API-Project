@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
@@ -36,11 +36,34 @@ function SignupFormModal() {
           }
         });
     }
+
     return setErrors({
       confirmPassword:
         "Confirm Password field must be the same as the Password field",
       // "Passwords must be the same",
     });
+  };
+
+  useEffect(() => {
+    const errors = {};
+    if (username.length < 4)
+      errors["username"] = "Username must be 4 characters or more";
+    if (password.length < 6)
+      errors["password"] = "Password must be 6 characters or more";
+    setErrors(errors);
+  }, [username, password]);
+
+  const check = () => {
+    if (!firstName) return true;
+    if (!lastName) return true;
+    if (!email) return true;
+    if (!password) return true;
+    else if (password.length < 6) return true;
+    if (!username) return true;
+    else if (username.length < 4) return true;
+    if (!confirmPassword) return true;
+
+    return false;
   };
 
   return (
@@ -112,7 +135,7 @@ function SignupFormModal() {
           )}
         </div>
         <div className="su-bc">
-          <button className="su-b" type="submit">
+          <button disabled={check()} className="su-b" type="submit">
             Sign Up
           </button>
         </div>

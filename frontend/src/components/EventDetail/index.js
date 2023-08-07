@@ -137,7 +137,7 @@ const EventDetail = () => {
           </div>
 
           <div className="ed-description">
-            <h3 className="ed-about">Details</h3>
+            <h3 className="ed-about">Description</h3>
             <p className="ed-about-info">{event.description}</p>
           </div>
         </div>

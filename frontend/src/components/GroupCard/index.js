@@ -32,7 +32,7 @@ const GroupCard = ({ obj, id }) => {
           </span>
           <p>{state.about}</p>
           <div>
-            {state.numEvents} Events * {state.private ? "Private" : "Public"}
+            {state.numEvents} Events · {state.private ? "Private" : "Public"}
           </div>
         </div>
       </div>

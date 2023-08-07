@@ -15,3 +15,7 @@
 .ec-cd{
   width: 85%;
 }
+
+.ec-oc:hover{
+  cursor: pointer;
+}

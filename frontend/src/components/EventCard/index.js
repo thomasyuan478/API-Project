@@ -26,10 +26,10 @@ const EventCard = ({ id }) => {
 
   return (
     <>
-      <div className="ec-oc">
+      <div className="ec-oc" onClick={onClick}>
         <div className="slide">
           <img className="slide-img" src={eventState.previewImage}></img>
-          <div className="ec-cc" onClick={onClick}>
+          <div className="ec-cc">
             <div>
               {eventState.startDate &&
                 eventState.startDate.slice(0, 12) +

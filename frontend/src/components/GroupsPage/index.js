@@ -11,11 +11,11 @@ const GroupPage = () => {
   const groupList = useSelector((state) => state.groups);
   const history = useHistory();
 
-  // useEffect(() => {
-  //   dispatch(getGroups());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getGroups());
+  }, [dispatch]);
   // console.log(groupList);
-  if (Object.keys(groupList.allGroups).length < 1) dispatch(getGroups());
+  // if (Object.keys(groupList.allGroups).length < 1) dispatch(getGroups());
 
 
   // console.log("Console Log on GroupsList", groupList.allGroups);

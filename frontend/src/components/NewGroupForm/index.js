@@ -81,44 +81,47 @@ const NewGroupForm = () => {
       <form onSubmit={onSubmit}>
         <div className="gf-container">
           <div className="el-container">
+            <h1>Start a New Group</h1>
             <p className="gf-flair">BECOME AN ORGANIZER</p>
             <h2>
               We'll walk you through a few steps to build your local community
             </h2>
           </div>
           <div className="el-container">
-            <h3>First, Set your group's location</h3>
-            <p>
-              Meetup groups meet locally, in person and online. We'll connect
-              you with people in your area, and more can join you online
-            </p>
-            {/* <label htmlFor="city">City:</label> */}
-            <div>
-              <input
-                placeholder="City"
-                id="city"
-                type="text"
-                onChange={(e) => setCity(e.target.value)}
-                value={city}
-                required
-              />
-              {validationErrors.city && (
-                <p className="errors">{validationErrors.city}</p>
-              )}
-            </div>
-            {/* <label htmlFor="state">State:</label> */}
-            <div>
-              <input
-                placeholder="State"
-                id="state"
-                type="text"
-                onChange={(e) => setState(e.target.value)}
-                value={state}
-                required
-              />
-              {validationErrors.state && (
-                <p className="errors">{validationErrors.state}</p>
-              )}
+            <div className="el-container">
+              <h3>First, Set your group's location</h3>
+              <p>
+                Meetup groups meet locally, in person and online. We'll connect
+                you with people in your area, and more can join you online
+              </p>
+              {/* <label htmlFor="city">City:</label> */}
+              <div>
+                <input
+                  placeholder="City"
+                  id="city"
+                  type="text"
+                  onChange={(e) => setCity(e.target.value)}
+                  value={city}
+                  required
+                />
+                {validationErrors.city && (
+                  <p className="errors">{validationErrors.city}</p>
+                )}
+              </div>
+              {/* <label htmlFor="state">State:</label> */}
+              <div>
+                <input
+                  placeholder="State"
+                  id="state"
+                  type="text"
+                  onChange={(e) => setState(e.target.value)}
+                  value={state}
+                  required
+                />
+                {validationErrors.state && (
+                  <p className="errors">{validationErrors.state}</p>
+                )}
+              </div>
             </div>
             <div className="el-container">
               <h3>What will your group's name be?</h3>
@@ -143,15 +146,15 @@ const NewGroupForm = () => {
               </div>
             </div>
             <div className="el-container">
-              <h3>Now describe what your group will be about</h3>
+              <h3>Describe the purpose of your group</h3>
               <p>
                 People will this when we promote your group, but you'll be able
                 to add to it later, too.
               </p>
               <ol>
                 <li>What's the purpose of this group?</li>
-                <li>who should join?</li>
-                <li>what will you do at your events?</li>
+                <li>Who should join?</li>
+                <li>What will you do at your events?</li>
               </ol>
               {/* <label htmlFor="about">About:</label> */}
               <div>

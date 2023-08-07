@@ -3,9 +3,11 @@ import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { check } from "express-validator";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -14,7 +16,7 @@ function LoginFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ email, password }))
+    return dispatch(sessionActions.login({ username, password }))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
@@ -28,6 +30,8 @@ function LoginFormModal() {
     return dispatch(
       sessionActions.login({
         email: "user2@user.io",
+        username: "FakeUser3",
+        credential: "user2@user.io",
         password: "password3",
       })
     )
@@ -38,6 +42,12 @@ function LoginFormModal() {
           setErrors(data.errors);
         }
       });
+  };
+
+  const check = () => {
+    if (username.length < 4) return true;
+    if (password.length < 6) return true;
+    return false;
   };
 
   return (
@@ -52,10 +62,10 @@ function LoginFormModal() {
               </label> */}
             <input
               type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
-              placeholder="Email"
+              placeholder="Username"
             />
           </div>
           <div className="login-fields">
@@ -71,7 +81,7 @@ function LoginFormModal() {
             />
           </div>
           <div className="li-bc">
-            <button className="li-b" type="submit">
+            <button disabled={check()} className="li-b" type="submit">
               Log In
             </button>
           </div>
